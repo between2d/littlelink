@@ -135,9 +135,31 @@ h1::after {
 }
 h1::before { color: #ff5bbd; transform: translate(2px, 0); clip-path: inset(15% 0 58%); }
 h1::after { color: #69e7ff; transform: translate(-2px, 0); clip-path: inset(62% 0 8%); }
-.tagline, .intro, .contact-panel > p { color: var(--muted); }
+.tagline, .contact-panel > p { color: var(--muted); }
 .tagline { margin-bottom: 0; }
-.intro { max-width: 620px; font-size: clamp(18px, 2.8vw, 28px); margin: 38px 0 0; }
+
+.bio-block {
+  max-width: 760px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 38px;
+}
+.bio-block p {
+  margin: 0;
+  padding: 16px;
+  border-left: 2px solid var(--acid);
+  background: rgba(255,255,255,.025);
+  color: var(--muted);
+  line-height: 1.55;
+}
+.bio-block strong {
+  display: block;
+  margin-bottom: 7px;
+  color: var(--acid);
+  font: 700 11px/1.2 ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: .14em;
+}
 
 .quick-nav {
   display: flex;
@@ -236,11 +258,17 @@ h2 { margin-bottom: 0; font-size: clamp(28px, 5vw, 46px); letter-spacing: -.04em
 .contact-panel .section-heading { display: block; }
 .contact-panel .section-heading p { margin-bottom: 10px; }
 .contact-panel > p { max-width: 620px; margin-inline: auto; }
+.contact-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 18px;
+}
 .contact-button {
   display: inline-flex;
   align-items: center;
   gap: 30px;
-  margin-top: 18px;
   padding: 16px 20px;
   border: 1px solid var(--acid);
   color: var(--acid);
@@ -264,7 +292,7 @@ footer a:hover { color: var(--acid); }
 @media (max-width: 700px) {
   .identity { align-items: flex-start; }
   .avatar { width: 72px; }
-  .link-grid, .work-grid { grid-template-columns: 1fr; }
+  .bio-block, .link-grid, .work-grid { grid-template-columns: 1fr; }
   .section-heading { display: block; }
   .section-heading p { margin-bottom: 8px; }
 }
@@ -275,6 +303,8 @@ footer a:hover { color: var(--acid); }
   .identity { display: block; margin-top: 34px; }
   .avatar { margin-bottom: 22px; }
   .signal-row span:nth-child(2) { max-width: 160px; }
+  .contact-actions { display: grid; }
+  .contact-button { justify-content: space-between; }
   footer { display: block; }
   footer a { display: inline-block; margin-top: 8px; }
 }
