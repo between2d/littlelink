@@ -1,17 +1,20 @@
 const PROFILE = {
   socials: [
-    { name: "Instagram", detail: "visuals, music, works in progress", url: "https://www.instagram.com/riegulate/", accent: "#ff5bbd" },
+    { name: "Instagram", detail: "visuals, music and works in progress", url: "https://www.instagram.com/riegulate/", accent: "#ff5bbd" },
+    { name: "WhatsApp", detail: "+55 83 98878-8180", url: "https://wa.me/5583988788180", accent: "#70ff9a" },
     { name: "YouTube", detail: "video art, music and experiments", url: "https://www.youtube.com/@riegulate6276", accent: "#ff665f" },
+    { name: "Portfolios", detail: "audiovisual, music, games and other work", url: "https://drive.google.com/drive/folders/16f2IcNY23wUPKQ-ZHk98uUYwPh3zl5_m", accent: "#d5ff3f" },
+    { name: "AI Portfolio", detail: "generative image, video and creative AI", url: "https://drive.google.com/drive/folders/143-8lbYNNywVk7VK5xvC2e5CTmzBXVOk", accent: "#b6a5ff" },
+    { name: "Behance", detail: "selected visual and audiovisual projects", url: "https://www.behance.net/between2d", accent: "#66b7ff" },
     { name: "Spotify", detail: "original music by Riegulate", url: "https://open.spotify.com/artist/4Dfa9mVsHeAwyVZfLgiAt8", accent: "#70ff9a" },
     { name: "SoundCloud", detail: "tracks, sketches and older releases", url: "https://soundcloud.com/riegulate", accent: "#ff9a4d" },
     { name: "LinkedIn", detail: "professional work and experience", url: "https://www.linkedin.com/in/riegulate/", accent: "#66b7ff" },
-    { name: "Portfolio", detail: "add your Google Drive portfolio URL in app.js", url: "", accent: "#d5ff3f", enabled: false },
-    { name: "Facebook", detail: "add your Facebook URL in app.js", url: "", accent: "#9e7bff", enabled: false }
+    { name: "Facebook", detail: "updates and older posts", url: "https://www.facebook.com/riegulate", accent: "#9e7bff" }
   ],
   works: [
     { title: "Cadê Zé", type: "MUSIC VIDEO / YOUTUBE", code: "TX-01", url: "https://www.youtube.com/watch?v=_rUUCNYITLQ" },
     { title: "Tudo Mentira", type: "MUSIC VIDEO / YOUTUBE", code: "TX-02", url: "https://www.youtube.com/watch?v=Jiyq40Uqqbg" },
-    { title: "Jardins Fragmentados", type: "VIDEO WORK / YOUTUBE", code: "TX-03", url: "https://youtu.be/cYnLtgwx-Z" },
+    { title: "Jardins Fragmentados", type: "VIDEO WORK / YOUTUBE", code: "TX-03", url: "https://youtu.be/cYnLtgwx-Z0" },
     { title: "Riegulate on Spotify", type: "MUSIC / DISCOGRAPHY", code: "TX-04", url: "https://open.spotify.com/artist/4Dfa9mVsHeAwyVZfLgiAt8" }
   ]
 };
