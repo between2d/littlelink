@@ -19,6 +19,12 @@ const spriteUrl = `${base}assets/project-sprite.webp`;
     <meta property="og:image" content={`${base}assets/featured-massa.webp`} />
     <title>riegulate — art, music & creative technology</title>
     <link rel="icon" href={`${base}favicon.svg`} type="image/svg+xml" />
+    <style is:inline>
+      /* Mobile content must never depend on JavaScript or IntersectionObserver. */
+      @media (max-width: 700px) {
+        .reveal { opacity: 1 !important; transform: none !important; }
+      }
+    </style>
   </head>
   <body style={`--sprite-url:url('${spriteUrl}')`}>
     <canvas id="world" aria-hidden="true"></canvas>
@@ -39,7 +45,7 @@ const spriteUrl = `${base}assets/project-sprite.webp`;
 
     <main id="top">
       <section id="store" class="hero shell" aria-labelledby="hero-title">
-        <div class="hero-copy reveal">
+        <div class="hero-copy reveal visible">
           <p class="signal"><span></span> NEW TRANSMISSION / JOÃO PESSOA</p>
           <p class="hero-kicker">Independent store · original T-shirts</p>
           <h1 id="hero-title"><span>Massa</span> Demais</h1>
@@ -52,7 +58,7 @@ const spriteUrl = `${base}assets/project-sprite.webp`;
             <span>CAMISETAS AUTORAIS</span><span>SMALL-BATCH</span><span>MADE IN PARAÍBA</span>
           </div>
         </div>
-        <div class="hero-visual reveal">
+        <div class="hero-visual reveal visible">
           <img src={`${base}assets/featured-massa.webp`} alt="Rieg wearing a Massa Demais shirt among CRT televisions and synthesizers at the beach" width="1800" height="1080" fetchpriority="high" />
           <div id="p5-stage" aria-hidden="true"></div>
           <div class="hero-label"><span>STORE SIGNAL 01</span><b>LIVE</b></div>
@@ -162,7 +168,13 @@ const spriteUrl = `${base}assets/project-sprite.webp`;
       </div>
     </dialog>
 
+    <script is:inline>
+      /* Fail open: a broken or blocked script must not make the portfolio invisible. */
+      window.setTimeout(() => {
+        document.querySelectorAll('.reveal').forEach((node) => node.classList.add('visible'));
+      }, 900);
+    </script>
     <script is:inline src="https://cdn.jsdelivr.net/npm/p5@2.3.1/lib/p5.min.js"></script>
-    <script is:inline type="module" src={`${base}site.js`}></script>
+    <script is:inline type="module" src={`${base}site.js?v=20260729-1`} onerror="document.querySelectorAll('.reveal').forEach((node) => node.classList.add('visible'))"></script>
   </body>
 </html>
