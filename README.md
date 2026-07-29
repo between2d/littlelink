@@ -7,7 +7,7 @@ Astro static portfolio using Three.js and p5.js.
 - Projects, links, descriptions and timeline: `src/data/projects.mjs`
 - Page structure: `src/pages/index.astro`
 - Visual design: `src/styles/global.css`
-- Filters, modal, Three.js and p5.js: `src/scripts/site.js`
+- Filters, modal, Three.js and p5.js: `public/site.js`
 - Images: `public/assets/`
 
 ## Run locally

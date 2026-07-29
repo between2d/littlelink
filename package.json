@@ -8,11 +8,9 @@
     "preview": "astro preview"
   },
   "dependencies": {
-    "astro": "7.1.4",
-    "p5": "2.3.1",
-    "three": "0.185.1"
+    "astro": "5.16.0"
   },
   "engines": {
-    "node": ">=22.12.0"
+    "node": ">=20.3.0"
   }
 }
