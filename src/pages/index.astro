@@ -1,7 +1,8 @@
 ---
 import ProjectCard from '../components/ProjectCard.astro';
-import { filters, projects, portfolios } from '../data/projects.mjs';
+import { projects, portfolios } from '../data/projects.mjs';
 import '../styles/global.css';
+import '../styles/link-list.css';
 
 const base = import.meta.env.BASE_URL;
 const storeUrl = 'https://riegulate.lojavirtualnuvem.com.br/';
@@ -12,12 +13,12 @@ const spriteUrl = `${base}assets/project-sprite.webp`;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Rieg Rodig / riegulate — músico, artista visual, VJ, editor e tecnólogo criativo em João Pessoa." />
+    <meta name="description" content="Links oficiais de Rieg Rodig / riegulate: Massa Demais, entrevistas, música, jogos, filmes, portfólios e redes." />
     <meta name="theme-color" content="#09090c" />
-    <meta property="og:title" content="riegulate — música, vídeos, portfólios e Massa Demais" />
-    <meta property="og:description" content="Loja Massa Demais, músicas, vídeos, portfólios e contato de Rieg Rodig." />
+    <meta property="og:title" content="riegulate — links oficiais" />
+    <meta property="og:description" content="Loja Massa Demais, entrevistas, lançamentos, jogos, filmes, portfólios e contato." />
     <meta property="og:image" content={`${base}assets/featured-massa.webp`} />
-    <title>riegulate — música, vídeos e portfólios</title>
+    <title>riegulate — links oficiais</title>
     <link rel="icon" href={`${base}favicon.svg`} type="image/svg+xml" />
     <style is:inline>
       @media (max-width: 700px) {
@@ -34,8 +35,9 @@ const spriteUrl = `${base}assets/project-sprite.webp`;
       <a class="wordmark" href="#top"><span>R</span> riegulate</a>
       <nav aria-label="Navegação principal">
         <a href="#store">loja</a>
-        <a href="#work">músicas e vídeos</a>
+        <a href="#links">links</a>
         <a href="#portfolios">portfólios</a>
+        <a href="#redes">redes</a>
         <a href="#contact">contato</a>
       </nav>
       <a class="header-store" href={storeUrl} target="_blank" rel="noopener noreferrer">Massa Demais ↗</a>
@@ -44,81 +46,94 @@ const spriteUrl = `${base}assets/project-sprite.webp`;
     <main id="top">
       <section id="store" class="hero shell" aria-labelledby="hero-title">
         <div class="hero-copy reveal visible">
-          <p class="signal"><span></span> LOJA NOVA / JOÃO PESSOA</p>
-          <p class="hero-kicker">Loja independente · camisetas autorais</p>
+          <p class="signal"><span></span> PRIMEIRO LINK / LOJA NOVA</p>
+          <p class="hero-kicker">Camisetas autorais · João Pessoa</p>
           <h1 id="hero-title"><span>Massa</span> Demais</h1>
-          <p class="hero-lede">Meu projeto mais novo e a prioridade atual: camisetas autorais que misturam humor nordestino, tipografia distorcida, tecnologia obsoleta e o universo visual do Riegulate.</p>
+          <p class="hero-lede">Minha loja virtual de camisetas autorais, misturando humor nordestino, tipografia distorcida, tecnologia obsoleta e o universo visual do Riegulate.</p>
           <div class="hero-actions">
-            <a class="button primary" href={storeUrl} target="_blank" rel="noopener noreferrer">Visitar a loja <b>↗</b></a>
-            <a class="button ghost" href="#work">Ver músicas e vídeos ↓</a>
+            <a class="button primary" href={storeUrl} target="_blank" rel="noopener noreferrer">Entrar na loja <b>↗</b></a>
+            <a class="button ghost" href="#links">Ver os outros links ↓</a>
           </div>
           <div class="hero-meta">
             <span>CAMISETAS AUTORAIS</span><span>PEQUENAS TIRAGENS</span><span>FEITO NA PARAÍBA</span>
           </div>
         </div>
 
-        <div class="hero-visual reveal visible">
+        <a class="hero-visual reveal visible" href={storeUrl} target="_blank" rel="noopener noreferrer" aria-label="Abrir a loja Massa Demais">
           <img src={`${base}assets/featured-massa.webp`} alt="Rieg usando uma camiseta Massa Demais entre televisores CRT e sintetizadores na praia" width="1800" height="1080" fetchpriority="high" />
           <div id="p5-stage" aria-hidden="true"></div>
-          <div class="hero-label"><span>SINAL DA LOJA 01</span><b>NO AR</b></div>
-        </div>
+          <div class="hero-label"><span>LOJA MASSA DEMAIS</span><b>COMPRAR ↗</b></div>
+        </a>
       </section>
 
       <section class="intro shell reveal" aria-labelledby="about-title">
         <div>
-          <p class="section-code">00 / SOBRE</p>
-          <h2 id="about-title">Uma trajetória, várias linguagens.</h2>
+          <p class="section-code">00 / RIEGULATE</p>
+          <h2 id="about-title">Música, imagem, jogos e tecnologia criativa.</h2>
         </div>
         <div class="bio-grid">
-          <p><strong>BIO</strong> Rieg Rodig (riegulate) é músico, artista visual, VJ, editor e tecnólogo criativo baseado em João Pessoa. Trabalha com música, vídeo, projeção, IA, jogos, mídias obsoletas e sistemas em tempo real.</p>
-          <p><strong>ATUAÇÃO</strong> Aqui estão os links diretos para ouvir os lançamentos, assistir aos vídeos e abrir os portfólios profissionais completos.</p>
+          <p><strong>SOBRE</strong> Rieg Rodig é músico, artista visual, VJ, editor e tecnólogo criativo baseado em João Pessoa.</p>
+          <p><strong>COMO USAR</strong> Todos os cards abaixo são links diretos. Um toque abre imediatamente o conteúdo correspondente.</p>
         </div>
       </section>
 
-      <div class="filter-dock" aria-label="Filtrar links">
-        <div class="filter-inner shell">
-          <span class="filter-label">FILTRAR LINKS</span>
-          <div class="filters" role="group" aria-label="Categorias">
-            {filters.map((filter, index) => (
-              <button class:list={[index === 0 && 'active']} type="button" data-filter={filter.id} aria-pressed={index === 0 ? 'true' : 'false'}>{filter.label}</button>
-            ))}
-          </div>
-          <span id="result-count" aria-live="polite">{projects.length} links</span>
-        </div>
-      </div>
-
-      <section id="work" class="work-section shell" aria-labelledby="work-title">
+      <section id="links" class="work-section shell" aria-labelledby="links-title">
         <div class="section-heading reveal">
           <div>
-            <p class="section-code">01 / MÚSICAS E VÍDEOS</p>
-            <h2 id="work-title">Clique e abra diretamente.</h2>
+            <p class="section-code">01 / LINKS EM DESTAQUE</p>
+            <h2 id="links-title">Na ordem certa.</h2>
           </div>
-          <p>Cada card funciona como um link: músicas e álbuns abrem no YouTube, e os trabalhos audiovisuais abrem no vídeo correspondente.</p>
+          <p>Entrevistas primeiro, depois os lançamentos solo, projetos da Rieg, jogos e a Poligonal.</p>
         </div>
 
-        <div class="project-grid" id="project-grid">
-          {projects.map((project) => <ProjectCard project={project} />)}
+        <div class="project-grid ordered-links" id="project-grid">
+          {projects.map((project, index) => (
+            <div class="ordered-link" style={`--order:${index + 1}`}>
+              <span class="ordered-number">{String(index + 2).padStart(2, '0')}</span>
+              <ProjectCard project={project} />
+            </div>
+          ))}
         </div>
-        <p class="empty-state" id="empty-state" hidden>Nenhum link nesta categoria.</p>
       </section>
 
       <section id="portfolios" class="portfolio-section shell" aria-labelledby="portfolio-title">
         <div class="section-heading reveal">
           <div>
             <p class="section-code">02 / PORTFÓLIOS</p>
-            <h2 id="portfolio-title">Escolha o portfólio certo.</h2>
+            <h2 id="portfolio-title">Trabalhos por área.</h2>
           </div>
-          <p>PDFs separados por área para curadores, produtores culturais, estúdios, emissoras e equipes de jogos.</p>
+          <p>PDFs completos para curadores, produtores culturais, estúdios, emissoras e equipes de jogos.</p>
         </div>
 
         <div class="portfolio-grid">
           {portfolios.map((portfolio, index) => (
             <a class="portfolio-card reveal" href={portfolio.url} target="_blank" rel="noopener noreferrer" style={`--accent:${portfolio.accent}`}>
-              <span>0{index + 1}</span>
+              <span>{String(index + 1).padStart(2, '0')}</span>
               <div><strong>{portfolio.title}</strong><p>{portfolio.detail}</p></div>
               <b>↗</b>
             </a>
           ))}
+        </div>
+      </section>
+
+      <section id="redes" class="social-section shell reveal" aria-labelledby="social-title">
+        <div class="section-heading">
+          <div>
+            <p class="section-code">03 / REDES E CANAIS</p>
+            <h2 id="social-title">Acompanhe e escute.</h2>
+          </div>
+          <p>Redes sociais, música, vídeos e presença profissional.</p>
+        </div>
+
+        <div class="social-link-grid">
+          <a href="https://www.instagram.com/riegulate/" target="_blank" rel="noopener noreferrer"><span>Instagram</span><b>↗</b></a>
+          <a href="https://www.youtube.com/@riegulate6276" target="_blank" rel="noopener noreferrer"><span>YouTube</span><b>↗</b></a>
+          <a href="https://open.spotify.com/artist/4Dfa9mVsHeAwyVZfLgiAt8" target="_blank" rel="noopener noreferrer"><span>Spotify · Riegulate</span><b>↗</b></a>
+          <a href="https://soundcloud.com/riegulate" target="_blank" rel="noopener noreferrer"><span>SoundCloud</span><b>↗</b></a>
+          <a href="https://www.behance.net/between2d" target="_blank" rel="noopener noreferrer"><span>Behance</span><b>↗</b></a>
+          <a href="https://www.linkedin.com/in/riegulate/" target="_blank" rel="noopener noreferrer"><span>LinkedIn</span><b>↗</b></a>
+          <a href="https://www.facebook.com/riegulate" target="_blank" rel="noopener noreferrer"><span>Facebook</span><b>↗</b></a>
+          <a href="https://wa.me/5583988788180" target="_blank" rel="noopener noreferrer"><span>WhatsApp</span><b>↗</b></a>
         </div>
       </section>
 
@@ -127,18 +142,12 @@ const spriteUrl = `${base}assets/project-sprite.webp`;
           <img src={`${base}assets/portrait.webp`} alt="Retrato de Rieg Rodig" width="800" height="800" loading="lazy" />
         </div>
         <div class="contact-copy">
-          <p class="section-code">03 / CONTATO</p>
-          <h2 id="contact-title">Vamos criar algo interessante — e terminar direito.</h2>
+          <p class="section-code">04 / CONTATO</p>
+          <h2 id="contact-title">Vamos trabalhar juntos.</h2>
           <p>Disponível para visuais ao vivo, VJ, projeção, edição de vídeo, motion graphics, música, sound design, áudio para jogos e projetos de tecnologia criativa.</p>
           <div class="contact-actions">
             <a class="button primary" href="https://wa.me/5583988788180" target="_blank" rel="noopener noreferrer">WhatsApp <b>↗</b></a>
             <a class="button ghost" href="mailto:riegulate@gmail.com">riegulate@gmail.com</a>
-          </div>
-          <div class="socials">
-            <a href="https://www.instagram.com/riegulate/" target="_blank" rel="noopener noreferrer">Instagram</a>
-            <a href="https://www.youtube.com/@riegulate6276" target="_blank" rel="noopener noreferrer">YouTube</a>
-            <a href="https://open.spotify.com/artist/4Dfa9mVsHeAwyVZfLgiAt8" target="_blank" rel="noopener noreferrer">Spotify</a>
-            <a href="https://www.linkedin.com/in/riegulate/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
           </div>
         </div>
       </section>
@@ -146,7 +155,7 @@ const spriteUrl = `${base}assets/project-sprite.webp`;
 
     <footer class="shell">
       <span>© <span id="year"></span> Rieg Rodig / riegulate</span>
-      <span>Feito com Astro · Three.js · p5.js</span>
+      <span>Astro · Three.js · p5.js</span>
       <a href="#top">voltar ao topo ↑</a>
     </footer>
 
@@ -156,6 +165,6 @@ const spriteUrl = `${base}assets/project-sprite.webp`;
       }, 900);
     </script>
     <script is:inline src="https://cdn.jsdelivr.net/npm/p5@2.3.1/lib/p5.min.js"></script>
-    <script is:inline type="module" src={`${base}site.js?v=20260729-2`} onerror="document.querySelectorAll('.reveal').forEach((node) => node.classList.add('visible'))"></script>
+    <script is:inline type="module" src={`${base}site.js?v=20260729-3`} onerror="document.querySelectorAll('.reveal').forEach((node) => node.classList.add('visible'))"></script>
   </body>
 </html>
