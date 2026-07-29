@@ -1,0 +1,32 @@
+---
+const { project } = Astro.props;
+const style = project.sprite
+  ? `--image-size:500% 500%;--sprite-position:${project.sprite};`
+  : `--image-url:url('${project.image}');--image-size:cover;--sprite-position:center;`;
+---
+<button
+  class="project-card reveal"
+  type="button"
+  data-category={project.category}
+  data-title={project.title}
+  data-eyebrow={project.eyebrow}
+  data-year={project.year}
+  data-description={project.description}
+  data-tools={project.tools}
+  data-url={project.url}
+  data-action={project.action}
+  data-sprite={project.sprite || ''}
+  data-image={project.image || ''}
+  aria-label={`Open details for ${project.title}`}
+>
+  <span class="project-image" style={style} role="img" aria-label={project.title}>
+    <span class="project-scan" aria-hidden="true"></span>
+    <span class="project-year">{project.year}</span>
+  </span>
+  <span class="project-copy">
+    <span class="project-eyebrow">{project.eyebrow}</span>
+    <strong>{project.title}</strong>
+    <span class="project-description">{project.description}</span>
+    <span class="project-footer"><span>{project.tools}</span><b>details +</b></span>
+  </span>
+</button>
