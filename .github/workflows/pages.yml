@@ -9,6 +9,7 @@ permissions:
   contents: read
   pages: write
   id-token: write
+  issues: write
 
 concurrency:
   group: pages
@@ -24,13 +25,32 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-      - name: Install dependencies
-        run: npm install --no-audit --no-fund
-      - name: Build Astro site
-        run: npm run build
+      - name: Install and build Astro
+        id: astro-build
+        continue-on-error: true
+        shell: bash
+        run: |
+          set -o pipefail
+          {
+            npm install --no-audit --no-fund
+            npm run build
+          } 2>&1 | tee build.log
+      - name: Report build failure
+        if: steps.astro-build.outcome == 'failure'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh issue create \
+            --title "Astro build failed: ${GITHUB_SHA::7}" \
+            --body-file build.log
+      - name: Stop failed build
+        if: steps.astro-build.outcome == 'failure'
+        run: exit 1
       - name: Configure Pages
+        if: steps.astro-build.outcome == 'success'
         uses: actions/configure-pages@v5
       - name: Upload site artifact
+        if: steps.astro-build.outcome == 'success'
         uses: actions/upload-pages-artifact@v4
         with:
           path: dist
