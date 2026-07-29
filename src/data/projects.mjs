@@ -119,4 +119,142 @@ export const projects = [
   {
     id: 'retro-tech', category: 'visual', year: 'Ongoing',
     title: 'Retro Tech at the Shoreline', eyebrow: 'Editorial worldbuilding',
-    descripti���q�^
+    description: 'CRTs, keyboards and aging hardware are staged against tropical coastline, salt air and sunlight—part personal mythology, part Massa Demais visual world.',
+    url: 'https://www.instagram.com/p/DWhpMFrF4ZY/', action: 'View project',
+    sprite: '50% 0%', tools: 'AI image-making · obsolete media · art direction'
+  },
+  {
+    id: 'hybrid-gems', category: 'visual', year: 'Ongoing',
+    title: 'Hybrid Gem Creatures', eyebrow: 'Generative image series',
+    description: 'Surreal organisms combine mineral texture, flesh, luxury and mutation, using surface and lighting as the primary narrative.',
+    url: 'https://drive.google.com/file/d/1c_vKSJwLx5RxAryWyR0kNdFEZsi3MKrV/view?usp=sharing', action: 'Open AI portfolio',
+    sprite: '75% 0%', tools: 'Generative AI · texture · lighting direction'
+  },
+  {
+    id: 'synthetic-identity', category: 'visual', year: 'Ongoing',
+    title: 'Synthetic Identity Experiments', eyebrow: 'Realtime AI / deepfake study',
+    description: 'Live Stable Diffusion, TouchDesigner and DeepFaceLive tests treat face transformation as performance, distortion and local media language.',
+    url: 'https://www.instagram.com/p/DR4k5D3jmnb/', action: 'View project',
+    sprite: '100% 0%', tools: 'Stable Diffusion · TouchDesigner · DeepFaceLive'
+  },
+  {
+    id: 'glitch-surveillance', category: 'visual', year: '2026',
+    title: 'Glitch Surveillance in João Pessoa', eyebrow: 'Computer vision / urban image',
+    description: 'City footage is processed through tracking, bounding boxes and signal noise, turning public space into a system that sees, misreads and forgets.',
+    url: 'https://www.instagram.com/p/DUnuY0-jg89/', action: 'View project',
+    sprite: '0% 25%', tools: 'Computer vision · tracking · TouchDesigner · glitch'
+  },
+
+  {
+    id: 'energisa-23', category: 'video', year: '2026',
+    title: 'Centro Cultural Energisa — 23 anos', eyebrow: 'Archive / editing / motion',
+    description: 'Thousands of historical photographs were organized, curated and transformed into a coherent series of anniversary videos spanning 23 years of cultural activity.',
+    url: 'https://youtu.be/ki8LLWCQsos', action: 'Watch project',
+    sprite: '100% 75%', tools: 'Premiere · After Effects · archive curation · ExifTool'
+  },
+  {
+    id: 'tvbet', category: 'video', year: '2025',
+    title: 'TVBet', eyebrow: 'High-volume editing / live production',
+    description: 'Daily short-form editing, graphics and technical live-show support in a fast sports-content operation producing roughly 12 videos per day.',
+    url: 'https://www.youtube.com/watch?v=oTOEZ1YZdTY', action: 'Watch sample',
+    sprite: '75% 75%', tools: 'Premiere · OBS · Streamlabs · remote production'
+  },
+  {
+    id: 'cade-ze', category: 'video', year: 'Music video',
+    title: 'Cadê Zé', eyebrow: 'Maga Bo feat. Rosângela Macedo',
+    description: 'Music-video editing and visual effects built around rhythm, heat, texture and the energy of the performance.',
+    url: 'https://www.youtube.com/watch?v=_rUUCNYITLQ', action: 'Watch video',
+    sprite: '0% 100%', tools: 'Editing · post-production · visual effects'
+  },
+  {
+    id: 'ovniska', category: 'video', year: 'Music video',
+    title: 'OvniSka', eyebrow: 'Parahyba Ska Jazz Foundation',
+    description: 'A graphic, rhythm-driven music video combining live performance with animated visual structure.',
+    url: 'https://www.youtube.com/watch?v=Q42lMBTEHc0', action: 'Watch video',
+    sprite: '25% 100%', tools: 'Direction · editing · animation'
+  },
+  {
+    id: 'rieg-1200-clip', category: 'video', year: 'Music video',
+    title: 'Rieg — 12:00', eyebrow: 'Official music video',
+    description: 'A VHS-inflected visual extension of the 12:00 universe, shaped through editing, distortion and audiovisual direction.',
+    url: 'https://www.youtube.com/watch?v=PKmDv6oMMKI', action: 'Watch video',
+    sprite: '50% 100%', tools: 'Direction · production · editing · animation'
+  },
+  {
+    id: 'orijah-cuba', category: 'video', year: 'Live video',
+    title: 'Orijàh — Cuba feat. Bixarte', eyebrow: 'Batalha da Paz',
+    description: 'Live-performance editing and post-production with attention to musical pacing, presence and atmosphere.',
+    url: 'https://www.youtube.com/watch?v=Iyk268xWhvI', action: 'Watch video',
+    image: youtubeThumb('Iyk268xWhvI'), tools: 'Editing · post-production · performance video'
+  },
+
+  {
+    id: 'nomad-soul-zero', category: 'games', year: '2020',
+    title: 'Nomad Soul Zero', eyebrow: 'Interactive album-game / Android',
+    description: 'A cyberpunk point-and-click album-game expanding the 12:00 universe through music, narrative, pixel art and exploration.',
+    url: 'https://play.google.com/store/apps/details?id=com.BarbaricRealms.NomadSoulZero', action: 'Play / download',
+    sprite: '100% 50%', tools: 'Creative direction · soundtrack · writing · Unity'
+  },
+  {
+    id: 'matapau', category: 'games', year: 'Game soundtrack',
+    title: 'Mata Pau', eyebrow: 'Brazilian indie tower defense',
+    description: 'An original soundtrack designed for strategic repetition, shifting between tension, calm and funky synth-pop without exhausting the player.',
+    url: 'https://poligonal.itch.io/matapau', action: 'Play on itch.io',
+    sprite: '0% 75%', tools: 'Composition · loops · gameplay music · collaboration'
+  },
+  {
+    id: 'pippos-quest', category: 'games', year: '2016',
+    title: 'Pippos Quest', eyebrow: 'Mobile advergame soundtrack',
+    description: 'A fast-turnaround original score spanning forró, surf rock, cartoon adventure and tropical themes for a colorful mobile campaign game.',
+    url: 'https://pippos.ticjoy.com.br/', action: 'Visit project',
+    sprite: '25% 75%', tools: 'Composition · mobile game · commercial brief'
+  },
+  {
+    id: 'no-do-diabo', category: 'games', year: 'Film score',
+    title: 'O Nó do Diabo', eyebrow: 'Feature-film music collaboration',
+    description: 'Musical collaboration for a Brazilian historical-horror feature, using atmosphere, repetition, tension and texture across multiple episodes and directors.',
+    url: 'https://www.youtube.com/watch?v=EKMKTQhPrEA', action: 'Watch trailer',
+    sprite: '50% 75%', tools: 'Film music · horror · Ableton · Pro Tools'
+  },
+  {
+    id: '12-00-film', category: 'games', year: '2018',
+    title: '12:00', eyebrow: 'Audiovisual feature film',
+    description: 'Rieg’s visual-album feature: a long-form collision of music, VHS language, science fiction, performance and DIY worldbuilding.',
+    url: 'https://www.youtube.com/watch?v=fYP4wZm39Jg', action: 'Watch full film',
+    image: youtubeThumb('fYP4wZm39Jg'), tools: 'Film · visual album · music · direction'
+  },
+
+  {
+    id: 'papopopcast', category: 'press', year: '2026',
+    title: 'Riegulate e a poética do ruído', eyebrow: 'PapoPopCast interview',
+    description: 'A conversation about image, sound, memory, noise and belonging across Riegulate’s multidisciplinary practice.',
+    url: 'https://papopopcast.com.br/2026/02/03/riegulate-e-a-poetica-do-ruido-quando-imagem-som-e-memoria-se-tornam-territorio-de-pertencimento/', action: 'Read interview',
+    sprite: '75% 100%', tools: 'Interview · visual art · music · memory'
+  },
+  {
+    id: 'historia-do-disco', category: 'press', year: 'Radio / podcast',
+    title: 'História do Disco: 12:00', eyebrow: 'Parahyba FM 103.9',
+    description: 'Rieg Band discusses the history, construction and audiovisual universe of the album and film 12:00.',
+    url: 'https://open.spotify.com/episode/73MHPlkxuJMGgX0yLHVt3s?si=8TNbBU_JQXuz9cDGjyJetQ', action: 'Listen on Spotify',
+    image: youtubeThumb('fYP4wZm39Jg'), tools: 'Radio · podcast · album history'
+  },
+];
+
+export const portfolios = [
+  { title: 'Visual Artist', detail: 'Video art, installation, performance, AI and real-time systems', url: 'https://drive.google.com/file/d/14XsKbv71z3YoZn-nuPbjUrxs63xgjXxh/view?usp=sharing', accent: '#69e7ff' },
+  { title: 'VJ & Live Visuals', detail: 'Projection mapping, live systems and immersive performance', url: 'https://drive.google.com/file/d/1TD4DlXACjDzMc601BCbDKejYK4_B8Rvb/view?usp=sharing', accent: '#d5ff3f' },
+  { title: 'AI Creative', detail: 'Generative image, video, identity studies and visual worldbuilding', url: 'https://drive.google.com/file/d/1c_vKSJwLx5RxAryWyR0kNdFEZsi3MKrV/view?usp=sharing', accent: '#b6a5ff' },
+  { title: 'Video Editor & Motion', detail: 'Editing, motion graphics, livestreams and audiovisual production', url: 'https://drive.google.com/file/d/1iPXlwX_LYH-QblDmJlp5KUKHtNQRq4gx/view?usp=sharing', accent: '#ff5bbd' },
+  { title: 'Sound & Game Design', detail: 'Composition, sound design, game audio and fictional worlds', url: 'https://drive.google.com/file/d/1ygLUlsRe76gXGKy21lnQfsXhmewQc6FE/view?usp=sharing', accent: '#ff9a4d' },
+];
+
+export const timeline = [
+  { year: '2005', title: 'João Pessoa', text: 'Begins building a long-term artistic practice in Brazil across music, video and local cultural scenes.' },
+  { year: '2018', title: '12:00', text: 'Rieg releases the audiovisual feature/visual album that becomes the foundation for later fictional projects.' },
+  { year: '2020', title: 'Jupiter + Nomad Soul Zero', text: 'A solo electronic album and a playable cyberpunk expansion of the Rieg universe arrive in the same creative period.' },
+  { year: '2021–22', title: 'Rainbow Glasses + NOW', text: 'The solo discography expands through remixes, singles and increasingly self-directed visual production.' },
+  { year: '2023–24', title: 'Gallery, AI and live systems', text: 'NaturIA, Geomorfia, Øxi Lab, Imagineland and other projects deepen the intersection of territory, memory and technology.' },
+  { year: '2024', title: 'Whatever, Together', text: 'A new solo release condenses pop, synths, home production and visual identity into a compact statement.' },
+  { year: '2025', title: 'Live visuals in cultural spaces', text: 'VJ and mapping work continues through Panela do Jazz, Cineteatro São José and other regional events.' },
+  { year: '2026', title: 'Massa Demais + new commissions', text: 'The practice expands into an independent T-shirt store, major audiovisual archive work and new virtual-art projects.' },
+];
