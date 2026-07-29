@@ -1,6 +1,6 @@
 ---
 import ProjectCard from '../components/ProjectCard.astro';
-import { filters, projects, portfolios, timeline } from '../data/projects.mjs';
+import { filters, projects, portfolios } from '../data/projects.mjs';
 import '../styles/global.css';
 
 const base = import.meta.env.BASE_URL;
@@ -8,19 +8,18 @@ const storeUrl = 'https://riegulate.lojavirtualnuvem.com.br/';
 const spriteUrl = `${base}assets/project-sprite.webp`;
 ---
 <!doctype html>
-<html lang="en">
+<html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Rieg Rodig / riegulate — visual artist, VJ, musician, editor and creative technologist in João Pessoa, Brazil." />
+    <meta name="description" content="Rieg Rodig / riegulate — músico, artista visual, VJ, editor e tecnólogo criativo em João Pessoa." />
     <meta name="theme-color" content="#09090c" />
-    <meta property="og:title" content="riegulate — music, visual art, VJ, film and games" />
-    <meta property="og:description" content="Projects, portfolios, interviews and the Massa Demais store." />
+    <meta property="og:title" content="riegulate — música, vídeos, portfólios e Massa Demais" />
+    <meta property="og:description" content="Loja Massa Demais, músicas, vídeos, portfólios e contato de Rieg Rodig." />
     <meta property="og:image" content={`${base}assets/featured-massa.webp`} />
-    <title>riegulate — art, music & creative technology</title>
+    <title>riegulate — música, vídeos e portfólios</title>
     <link rel="icon" href={`${base}favicon.svg`} type="image/svg+xml" />
     <style is:inline>
-      /* Mobile content must never depend on JavaScript or IntersectionObserver. */
       @media (max-width: 700px) {
         .reveal { opacity: 1 !important; transform: none !important; }
       }
@@ -33,12 +32,11 @@ const spriteUrl = `${base}assets/project-sprite.webp`;
 
     <header class="site-header">
       <a class="wordmark" href="#top"><span>R</span> riegulate</a>
-      <nav aria-label="Primary navigation">
-        <a href="#store">store</a>
-        <a href="#work">work</a>
-        <a href="#portfolios">portfolios</a>
-        <a href="#timeline">timeline</a>
-        <a href="#contact">contact</a>
+      <nav aria-label="Navegação principal">
+        <a href="#store">loja</a>
+        <a href="#work">músicas e vídeos</a>
+        <a href="#portfolios">portfólios</a>
+        <a href="#contact">contato</a>
       </nav>
       <a class="header-store" href={storeUrl} target="_blank" rel="noopener noreferrer">Massa Demais ↗</a>
     </header>
@@ -46,100 +44,92 @@ const spriteUrl = `${base}assets/project-sprite.webp`;
     <main id="top">
       <section id="store" class="hero shell" aria-labelledby="hero-title">
         <div class="hero-copy reveal visible">
-          <p class="signal"><span></span> NEW TRANSMISSION / JOÃO PESSOA</p>
-          <p class="hero-kicker">Independent store · original T-shirts</p>
+          <p class="signal"><span></span> LOJA NOVA / JOÃO PESSOA</p>
+          <p class="hero-kicker">Loja independente · camisetas autorais</p>
           <h1 id="hero-title"><span>Massa</span> Demais</h1>
-          <p class="hero-lede">My newest project—and the current priority: original shirts connecting Northeastern humor, distorted typography, obsolete technology and the broader visual universe of Riegulate.</p>
+          <p class="hero-lede">Meu projeto mais novo e a prioridade atual: camisetas autorais que misturam humor nordestino, tipografia distorcida, tecnologia obsoleta e o universo visual do Riegulate.</p>
           <div class="hero-actions">
-            <a class="button primary" href={storeUrl} target="_blank" rel="noopener noreferrer">Visit the store <b>↗</b></a>
-            <a class="button ghost" href="#work">Explore the work ↓</a>
+            <a class="button primary" href={storeUrl} target="_blank" rel="noopener noreferrer">Visitar a loja <b>↗</b></a>
+            <a class="button ghost" href="#work">Ver músicas e vídeos ↓</a>
           </div>
           <div class="hero-meta">
-            <span>CAMISETAS AUTORAIS</span><span>SMALL-BATCH</span><span>MADE IN PARAÍBA</span>
+            <span>CAMISETAS AUTORAIS</span><span>PEQUENAS TIRAGENS</span><span>FEITO NA PARAÍBA</span>
           </div>
         </div>
+
         <div class="hero-visual reveal visible">
-          <img src={`${base}assets/featured-massa.webp`} alt="Rieg wearing a Massa Demais shirt among CRT televisions and synthesizers at the beach" width="1800" height="1080" fetchpriority="high" />
+          <img src={`${base}assets/featured-massa.webp`} alt="Rieg usando uma camiseta Massa Demais entre televisores CRT e sintetizadores na praia" width="1800" height="1080" fetchpriority="high" />
           <div id="p5-stage" aria-hidden="true"></div>
-          <div class="hero-label"><span>STORE SIGNAL 01</span><b>LIVE</b></div>
+          <div class="hero-label"><span>SINAL DA LOJA 01</span><b>NO AR</b></div>
         </div>
       </section>
 
       <section class="intro shell reveal" aria-labelledby="about-title">
         <div>
-          <p class="section-code">00 / ABOUT</p>
-          <h2 id="about-title">One practice, several forms.</h2>
+          <p class="section-code">00 / SOBRE</p>
+          <h2 id="about-title">Uma trajetória, várias linguagens.</h2>
         </div>
         <div class="bio-grid">
-          <p><strong>PT</strong> Rieg Rodig (riegulate) é artista visual, VJ, músico, editor e tecnólogo criativo baseado em João Pessoa. Trabalha com vídeo, projeção, música, IA, jogos, mídias obsoletas e sistemas em tempo real.</p>
-          <p><strong>EN</strong> Rieg Rodig (riegulate) is a visual artist, VJ, musician, editor and creative technologist based in João Pessoa, Brazil. His work moves through video, projection, music, AI, games, obsolete media and real-time systems.</p>
+          <p><strong>BIO</strong> Rieg Rodig (riegulate) é músico, artista visual, VJ, editor e tecnólogo criativo baseado em João Pessoa. Trabalha com música, vídeo, projeção, IA, jogos, mídias obsoletas e sistemas em tempo real.</p>
+          <p><strong>ATUAÇÃO</strong> Aqui estão os links diretos para ouvir os lançamentos, assistir aos vídeos e abrir os portfólios profissionais completos.</p>
         </div>
       </section>
 
-      <div class="filter-dock" aria-label="Filter projects">
+      <div class="filter-dock" aria-label="Filtrar links">
         <div class="filter-inner shell">
-          <span class="filter-label">FILTER SIGNAL</span>
-          <div class="filters" role="group" aria-label="Project categories">
+          <span class="filter-label">FILTRAR LINKS</span>
+          <div class="filters" role="group" aria-label="Categorias">
             {filters.map((filter, index) => (
               <button class:list={[index === 0 && 'active']} type="button" data-filter={filter.id} aria-pressed={index === 0 ? 'true' : 'false'}>{filter.label}</button>
             ))}
           </div>
-          <span id="result-count" aria-live="polite">{projects.length} works</span>
+          <span id="result-count" aria-live="polite">{projects.length} links</span>
         </div>
       </div>
 
       <section id="work" class="work-section shell" aria-labelledby="work-title">
         <div class="section-heading reveal">
-          <div><p class="section-code">01 / SELECTED WORK</p><h2 id="work-title">Music, images, systems and stories.</h2></div>
-          <p>Click a card for context, credits and the direct link. The images here were pulled from the actual portfolio files and source material, with YouTube artwork used for music releases.</p>
+          <div>
+            <p class="section-code">01 / MÚSICAS E VÍDEOS</p>
+            <h2 id="work-title">Clique e abra diretamente.</h2>
+          </div>
+          <p>Cada card funciona como um link: músicas e álbuns abrem no YouTube, e os trabalhos audiovisuais abrem no vídeo correspondente.</p>
         </div>
+
         <div class="project-grid" id="project-grid">
           {projects.map((project) => <ProjectCard project={project} />)}
         </div>
-        <p class="empty-state" id="empty-state" hidden>No works in this filter yet.</p>
+        <p class="empty-state" id="empty-state" hidden>Nenhum link nesta categoria.</p>
       </section>
 
       <section id="portfolios" class="portfolio-section shell" aria-labelledby="portfolio-title">
         <div class="section-heading reveal">
-          <div><p class="section-code">02 / COMPLETE PORTFOLIOS</p><h2 id="portfolio-title">Choose the version of me you need.</h2></div>
-          <p>Focused PDF portfolios for curators, cultural producers, studios, broadcasters and game teams.</p>
+          <div>
+            <p class="section-code">02 / PORTFÓLIOS</p>
+            <h2 id="portfolio-title">Escolha o portfólio certo.</h2>
+          </div>
+          <p>PDFs separados por área para curadores, produtores culturais, estúdios, emissoras e equipes de jogos.</p>
         </div>
+
         <div class="portfolio-grid">
           {portfolios.map((portfolio, index) => (
             <a class="portfolio-card reveal" href={portfolio.url} target="_blank" rel="noopener noreferrer" style={`--accent:${portfolio.accent}`}>
-              <span>0{index + 1}</span><div><strong>{portfolio.title}</strong><p>{portfolio.detail}</p></div><b>↗</b>
+              <span>0{index + 1}</span>
+              <div><strong>{portfolio.title}</strong><p>{portfolio.detail}</p></div>
+              <b>↗</b>
             </a>
           ))}
         </div>
       </section>
 
-      <section id="timeline" class="timeline-section shell" aria-labelledby="timeline-title">
-        <div class="section-heading reveal">
-          <div><p class="section-code">03 / TIMELINE</p><h2 id="timeline-title">A long signal, not a sudden profile.</h2></div>
-          <p>A compressed path through music, film, games, galleries, live visuals and the current store.</p>
-        </div>
-        <div class="timeline" role="list">
-          {timeline.map((item, index) => (
-            <article class="timeline-item reveal" role="listitem" style={`--i:${index}`}>
-              <span class="timeline-year">{item.year}</span>
-              <div><h3>{item.title}</h3><p>{item.text}</p></div>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section class="press-strip shell reveal" aria-label="Selected interviews">
-        <div><p class="section-code">04 / PRESS</p><h2>Conversations about the work.</h2></div>
-        <a href="https://papopopcast.com.br/2026/02/03/riegulate-e-a-poetica-do-ruido-quando-imagem-som-e-memoria-se-tornam-territorio-de-pertencimento/" target="_blank" rel="noopener noreferrer"><span>PapoPopCast</span><strong>Riegulate e a poética do ruído</strong><b>read ↗</b></a>
-        <a href="https://open.spotify.com/episode/73MHPlkxuJMGgX0yLHVt3s?si=8TNbBU_JQXuz9cDGjyJetQ" target="_blank" rel="noopener noreferrer"><span>Parahyba FM 103.9</span><strong>História do Disco: 12:00</strong><b>listen ↗</b></a>
-      </section>
-
       <section id="contact" class="contact shell reveal" aria-labelledby="contact-title">
-        <div class="contact-portrait"><img src={`${base}assets/portrait.webp`} alt="Portrait of Rieg Rodig" width="800" height="800" loading="lazy" /></div>
+        <div class="contact-portrait">
+          <img src={`${base}assets/portrait.webp`} alt="Retrato de Rieg Rodig" width="800" height="800" loading="lazy" />
+        </div>
         <div class="contact-copy">
-          <p class="section-code">05 / CONTACT</p>
-          <h2 id="contact-title">Make something strange—and finish it properly.</h2>
-          <p>Available for live visuals, VJing, projection, video editing, motion graphics, music, sound design, game audio and creative-technology projects.</p>
+          <p class="section-code">03 / CONTATO</p>
+          <h2 id="contact-title">Vamos criar algo interessante — e terminar direito.</h2>
+          <p>Disponível para visuais ao vivo, VJ, projeção, edição de vídeo, motion graphics, música, sound design, áudio para jogos e projetos de tecnologia criativa.</p>
           <div class="contact-actions">
             <a class="button primary" href="https://wa.me/5583988788180" target="_blank" rel="noopener noreferrer">WhatsApp <b>↗</b></a>
             <a class="button ghost" href="mailto:riegulate@gmail.com">riegulate@gmail.com</a>
@@ -154,27 +144,18 @@ const spriteUrl = `${base}assets/project-sprite.webp`;
       </section>
     </main>
 
-    <footer class="shell"><span>© <span id="year"></span> Rieg Rodig / riegulate</span><span>Astro · Three.js · p5.js</span><a href="#top">back to signal ↑</a></footer>
-
-    <dialog id="project-dialog" class="project-dialog">
-      <button class="dialog-close" type="button" aria-label="Close project details">×</button>
-      <div class="dialog-media" role="img"><span></span></div>
-      <div class="dialog-copy">
-        <p class="dialog-eyebrow"></p>
-        <h2></h2>
-        <p class="dialog-description"></p>
-        <p class="dialog-tools"></p>
-        <a class="button primary dialog-link" href="#" target="_blank" rel="noopener noreferrer">Open work ↗</a>
-      </div>
-    </dialog>
+    <footer class="shell">
+      <span>© <span id="year"></span> Rieg Rodig / riegulate</span>
+      <span>Feito com Astro · Three.js · p5.js</span>
+      <a href="#top">voltar ao topo ↑</a>
+    </footer>
 
     <script is:inline>
-      /* Fail open: a broken or blocked script must not make the portfolio invisible. */
       window.setTimeout(() => {
         document.querySelectorAll('.reveal').forEach((node) => node.classList.add('visible'));
       }, 900);
     </script>
     <script is:inline src="https://cdn.jsdelivr.net/npm/p5@2.3.1/lib/p5.min.js"></script>
-    <script is:inline type="module" src={`${base}site.js?v=20260729-1`} onerror="document.querySelectorAll('.reveal').forEach((node) => node.classList.add('visible'))"></script>
+    <script is:inline type="module" src={`${base}site.js?v=20260729-2`} onerror="document.querySelectorAll('.reveal').forEach((node) => node.classList.add('visible'))"></script>
   </body>
 </html>
