@@ -29,36 +29,88 @@ if (
 
 window.setTimeout(showEverything, 900);
 
-// Barra fixa de filtros.
+// Filtros combinados por área, ano e texto, com URLs compartilháveis.
 const filterButtons = [...document.querySelectorAll('[data-filter]')];
-const cards = [...document.querySelectorAll('.project-card')];
+const workItems = [...document.querySelectorAll('[data-project]')];
+const yearFilter = document.querySelector('#year-filter');
+const searchInput = document.querySelector('#project-search');
+const clearFilters = document.querySelector('#clear-filters');
 const resultCount = document.querySelector('#result-count');
 const emptyState = document.querySelector('#empty-state');
+const allowedCategories = new Set(filterButtons.map((button) => button.dataset.filter));
+const allowedYears = new Set([...yearFilter.options].map((option) => option.value));
 
-function setFilter(filter) {
-  let visible = 0;
+const normalizeText = (value) => (value || '')
+  .normalize('NFD')
+  .replace(/[\u0300-\u036f]/g, '')
+  .toLocaleLowerCase('pt-BR')
+  .trim();
 
-  cards.forEach((card) => {
-    const show = filter === 'all' || card.dataset.category === filter;
-    card.hidden = !show;
-    if (show) visible += 1;
+const query = new URLSearchParams(window.location.search);
+const state = {
+  category: allowedCategories.has(query.get('area')) ? query.get('area') : 'all',
+  year: allowedYears.has(query.get('ano')) ? query.get('ano') : 'all',
+  search: query.get('busca') || '',
+};
+yearFilter.value = state.year;
+searchInput.value = state.search;
+
+function applyFilters() {
+  const search = normalizeText(state.search);
+  let count = 0;
+  workItems.forEach((item) => {
+    const card = item.querySelector('.project-card');
+    const categories = card.dataset.categories.split(' ').filter(Boolean);
+    const matchingCategory = state.category === 'all' || categories.includes(state.category);
+    const matchingYear = state.year === 'all'
+      || (state.year === 'undated' ? !card.dataset.year : card.dataset.year === state.year);
+    const matchingText = !search || normalizeText(card.textContent).includes(search);
+    const visible = matchingCategory && matchingYear && matchingText;
+    item.hidden = !visible;
+    if (visible) {
+      count += 1;
+      card.classList.add('visible');
+    }
   });
 
   filterButtons.forEach((button) => {
-    const active = button.dataset.filter === filter;
+    const active = button.dataset.filter === state.category;
     button.classList.toggle('active', active);
     button.setAttribute('aria-pressed', String(active));
   });
+  if (resultCount) resultCount.textContent = `${count} ${count === 1 ? 'trabalho' : 'trabalhos'}`;
+  if (emptyState) emptyState.hidden = count !== 0;
 
-  if (resultCount) {
-    resultCount.textContent = `${visible} ${visible === 1 ? 'link' : 'links'}`;
-  }
-  if (emptyState) emptyState.hidden = visible !== 0;
+  const next = new URL(window.location.href);
+  ['area', 'ano', 'busca'].forEach((key) => next.searchParams.delete(key));
+  if (state.category !== 'all') next.searchParams.set('area', state.category);
+  if (state.year !== 'all') next.searchParams.set('ano', state.year);
+  if (state.search.trim()) next.searchParams.set('busca', state.search.trim());
+  window.history.replaceState(null, '', next.pathname + next.search + next.hash);
 }
 
-filterButtons.forEach((button) => {
-  button.addEventListener('click', () => setFilter(button.dataset.filter));
+filterButtons.forEach((button) => button.addEventListener('click', () => {
+  state.category = button.dataset.filter;
+  applyFilters();
+}));
+yearFilter.addEventListener('change', () => {
+  state.year = yearFilter.value;
+  applyFilters();
 });
+searchInput.addEventListener('input', () => {
+  state.search = searchInput.value;
+  applyFilters();
+});
+clearFilters.addEventListener('click', () => {
+  state.category = 'all';
+  state.year = 'all';
+  state.search = '';
+  yearFilter.value = 'all';
+  searchInput.value = '';
+  applyFilters();
+  searchInput.focus();
+});
+applyFilters();
 
 // Three.js: partículas e anéis discretos ao fundo.
 async function startThree() {

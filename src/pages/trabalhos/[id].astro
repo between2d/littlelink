@@ -1,0 +1,79 @@
+---
+import { recentWork, disciplines } from '../../data/work.mjs';
+import '../../styles/global.css';
+import '../../styles/portfolio.css';
+
+export function getStaticPaths() {
+  return recentWork.map((project) => ({
+    params: { id: project.id },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+const base = import.meta.env.BASE_URL;
+const labels = project.categories
+  .map((category) => disciplines.find((item) => item.id === category)?.label)
+  .filter(Boolean)
+  .join(' · ');
+---
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#09090c" />
+    <meta name="description" content={project.description} />
+    <meta property="og:title" content={`${project.title} | Rieg Rodig`} />
+    <meta property="og:description" content={project.description} />
+    <title>{project.title} | Rieg Rodig / riegulate</title>
+    <link rel="icon" href={`${base}favicon.svg`} type="image/svg+xml" />
+  </head>
+  <body>
+    <div class="noise" aria-hidden="true"></div>
+    <div class="scanlines" aria-hidden="true"></div>
+    <header class="site-header">
+      <a class="wordmark" href={base}><span>R</span> riegulate</a>
+      <nav aria-label="Navegação principal">
+        <a href={`${base}#trabalhos`}>trabalhos</a>
+        <a href={`${base}#portfolios`}>portfólios</a>
+        <a href={`${base}#contact`}>contato</a>
+      </nav>
+      <a class="header-store" href="https://riegulate.lojavirtualnuvem.com.br/" target="_blank" rel="noopener noreferrer">Massa Demais ↗</a>
+    </header>
+    <main>
+      <article class="shell project-detail-shell">
+        <a class="project-back" href={`${base}#trabalhos`}>← Voltar aos trabalhos</a>
+        <div class="project-detail-grid">
+          <div class="project-detail-poster" style={`--poster-accent:${project.accent};`} role="img" aria-label={`Cartaz tipográfico: ${project.title}`}>
+            <span>{project.posterText}</span>
+          </div>
+          <div class="project-detail-info">
+            <p class="section-code">{project.year} / {labels}</p>
+            <h1>{project.title}</h1>
+            <p>{project.description}</p>
+            <dl class="project-facts">
+              <div><dt>Atuação</dt><dd>{project.role}</dd></div>
+              <div><dt>Situação</dt><dd>{project.status}</dd></div>
+              <div><dt>Recursos</dt><dd>{project.tools}</dd></div>
+            </dl>
+            {!project.externalUrl && (
+              <p>Este registro apresenta o trabalho sem atribuir imagens, vídeos ou materiais públicos que ainda não foram vinculados ao portfólio.</p>
+            )}
+            <div class="contact-actions">
+              {project.externalUrl && (
+                <a class="button primary" href={project.externalUrl} target="_blank" rel="noopener noreferrer">{project.externalLabel || 'Ver projeto'} ↗</a>
+              )}
+              <a class:list={['button', { primary: !project.externalUrl, ghost: Boolean(project.externalUrl) }]} href="mailto:riegulate@gmail.com">Pedir materiais / entrar em contato ↗</a>
+            </div>
+          </div>
+        </div>
+      </article>
+    </main>
+    <footer class="shell">
+      <span>© {new Date().getFullYear()} Rieg Rodig / riegulate</span>
+      <span>Arte · Vídeo · Áudio · Desenvolvimento</span>
+      <a href={`${base}#trabalhos`}>Voltar ao portfólio ↑</a>
+    </footer>
+  </body>
+</html>
