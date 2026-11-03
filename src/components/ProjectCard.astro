@@ -9,6 +9,7 @@ const visualStyle = project.sprite
     : `--poster-accent:${project.accent || '#d5ff3f'};`;
 const href = project.url || `${base}trabalhos/${project.id}/`;
 const action = project.action || 'Conhecer projeto';
+const numericYear = /^\d{4}$/.test(project.year) ? project.year : '';
 ---
 <a
   class:list={['project-card', 'reveal', { 'project-card--poster': !hasImage }]}
@@ -16,7 +17,7 @@ const action = project.action || 'Conhecer projeto';
   target={project.url ? '_blank' : undefined}
   rel={project.url ? 'noopener noreferrer' : undefined}
   data-categories={(project.categories || []).join(' ')}
-  data-year={/^\d{4}$/.test(project.year) ? project.year : ''}
+  data-year={numericYear}
   aria-label={`${action}: ${project.title}`}
 >
   <span class:list={['project-image', { 'project-image--poster': !hasImage }]} style={visualStyle} role="img" aria-label={project.title}>
