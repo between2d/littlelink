@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { projects as legacy } from '../src/data/projects.mjs';
 import { allWork, availableYears, disciplines, recentWork } from '../src/data/work.mjs';
+import { caseStudies, featuredIds } from '../src/data/case-studies.mjs';
 
 test('every project has a unique slug and valid discipline', () => {
   const all = allWork(legacy);
@@ -34,4 +35,32 @@ test('2026 commissioned work and artistic projects are present', () => {
   const ids = new Set(recentWork.map((item) => item.id));
   ['viva-usina-2026', 'campanha-nabor-2026', 'presenca-instavel', 'canal-zero-tv', 'aulas-idiomas']
     .forEach((id) => assert.ok(ids.has(id)));
+});
+
+test('featured work exists and points to complete case studies', () => {
+  const entries = new Map(recentWork.map((work) => [work.id, work]));
+  assert.equal(featuredIds.length, 3);
+  assert.equal(new Set(featuredIds).size, 3);
+
+  for (const id of featuredIds) {
+    assert.ok(entries.has(id), `featured project not found: ${id}`);
+    const study = caseStudies[id];
+    assert.ok(study, `case study missing: ${id}`);
+    for (const property of ['heading', 'intro', 'date', 'place', 'involvement', 'challenge']) {
+      assert.ok(study[property] && typeof study[property] === 'string', `missing ${property} for ${id}`);
+    }
+    assert.ok(Array.isArray(study.execution) && study.execution.length >= 2);
+    assert.ok(Array.isArray(study.outcomes) && study.outcomes.length >= 1);
+    for (const link of study.publicLinks) {
+      const url = new URL(link.url);
+      assert.equal(url.protocol, 'https:');
+      assert.ok(link.label);
+    }
+  }
+});
+
+test('no released status is claimed for the interactive Metamuseu work', () => {
+  const project = recentWork.find((work) => work.id === 'presenca-instavel');
+  assert.match(project.status, /em desenvolvimento/i);
+  assert.match(caseStudies['presenca-instavel'].intro, /em andamento/i);
 });
