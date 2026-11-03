@@ -1,22 +1,25 @@
 ---
 import ProjectCard from '../components/ProjectCard.astro';
-import { projects, portfolios } from '../data/projects.mjs';
+import { projects as archiveProjects, portfolios } from '../data/projects.mjs';
+import { disciplines, allWork, availableYears } from '../data/work.mjs';
 import '../styles/global.css';
 import '../styles/link-list.css';
 
 const base = import.meta.env.BASE_URL;
 const storeUrl = 'https://riegulate.lojavirtualnuvem.com.br/';
 const spriteUrl = `${base}assets/project-sprite.webp`;
+const projects = allWork(archiveProjects);
+const years = availableYears(projects);
 ---
 <!doctype html>
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Links oficiais de Rieg Rodig / riegulate: Massa Demais, entrevistas, música, jogos, filmes, portfólios e redes." />
+    <meta name="description" content="Portfólio de Rieg Rodig / riegulate: arte, vídeo, VJ, desenvolvimento criativo, aulas e áudio. Trabalhos de 2026, projetos e acervo." />
     <meta name="theme-color" content="#09090c" />
-    <meta property="og:title" content="riegulate — links oficiais" />
-    <meta property="og:description" content="Loja Massa Demais, entrevistas, lançamentos, jogos, filmes, portfólios e contato." />
+    <meta property="og:title" content="Rieg Rodig / riegulate — portfólio" />
+    <meta property="og:description" content="Projetos e trabalhos em arte, audiovisual, jogos, desenvolvimento e música. Viva Usina, Metamuseu, Canal Zero e mais." />
     <meta property="og:image" content={`${base}assets/featured-massa.webp`} />
     <title>riegulate — links oficiais</title>
     <link rel="icon" href={`${base}favicon.svg`} type="image/svg+xml" />
@@ -35,7 +38,7 @@ const spriteUrl = `${base}assets/project-sprite.webp`;
       <a class="wordmark" href="#top"><span>R</span> riegulate</a>
       <nav aria-label="Navegação principal">
         <a href="#store">loja</a>
-        <a href="#links">links</a>
+        <a href="#trabalhos">trabalhos</a>
         <a href="#portfolios">portfólios</a>
         <a href="#redes">redes</a>
         <a href="#contact">contato</a>
@@ -52,7 +55,7 @@ const spriteUrl = `${base}assets/project-sprite.webp`;
           <p class="hero-lede">Minha loja virtual de camisetas autorais, misturando humor nordestino, tipografia distorcida, tecnologia obsoleta e o universo visual do Riegulate.</p>
           <div class="hero-actions">
             <a class="button primary" href={storeUrl} target="_blank" rel="noopener noreferrer">Entrar na loja <b>↗</b></a>
-            <a class="button ghost" href="#links">Ver os outros links ↓</a>
+            <a class="button ghost" href="#trabalhos">Explorar o portfólio ↓</a>
           </div>
           <div class="hero-meta">
             <span>CAMISETAS AUTORAIS</span><span>PEQUENAS TIRAGENS</span><span>FEITO NA PARAÍBA</span>
@@ -72,28 +75,57 @@ const spriteUrl = `${base}assets/project-sprite.webp`;
           <h2 id="about-title">Música, imagem, jogos e tecnologia criativa.</h2>
         </div>
         <div class="bio-grid">
-          <p><strong>SOBRE</strong> Rieg Rodig é músico, artista visual, VJ, editor e tecnólogo criativo baseado em João Pessoa.</p>
-          <p><strong>COMO USAR</strong> Todos os cards abaixo são links diretos. Um toque abre imediatamente o conteúdo correspondente.</p>
+          <p><strong>SOBRE</strong> Rieg Rodig é músico, artista visual, VJ, editor, desenvolvedor criativo e professor de idiomas baseado em João Pessoa. Trabalha com som, imagem, programação e performance.</p>
+          <p><strong>COMO USAR</strong> Filtre os trabalhos por área e ano, pesquise um projeto e abra os detalhes. O acervo inclui lançamentos, trabalhos profissionais e projetos em andamento.</p>
         </div>
       </section>
 
-      <section id="links" class="work-section shell" aria-labelledby="links-title">
+      <section id="trabalhos" class="work-section shell" aria-labelledby="links-title">
+        <span id="links" class="anchor-alias" aria-hidden="true"></span>
         <div class="section-heading reveal">
           <div>
-            <p class="section-code">01 / LINKS EM DESTAQUE</p>
-            <h2 id="links-title">Na ordem certa.</h2>
+            <p class="section-code">01 / TRABALHOS E PROJETOS</p>
+            <h2 id="links-title">O que fiz, faço e estou construindo.</h2>
           </div>
-          <p>Entrevistas primeiro, depois os lançamentos solo, projetos da Rieg, jogos e a Poligonal.</p>
+          <p>Trabalhos recentes, apresentações, videoarte, pós-produção, tecnologia criativa e lançamentos anteriores. Projetos em desenvolvimento estão identificados como tal.</p>
         </div>
 
-        <div class="project-grid ordered-links" id="project-grid">
-          {projects.map((project, index) => (
-            <div class="ordered-link" style={`--order:${index + 1}`}>
-              <span class="ordered-number">{String(index + 2).padStart(2, '0')}</span>
+        <div class="filter-dock" role="search" aria-label="Filtrar trabalhos">
+          <div class="filter-inner">
+            <span class="filter-label">EXPLORAR /</span>
+            <div class="filters" role="group" aria-label="Filtrar por área">
+              <button type="button" data-filter="all" aria-pressed="true" class="active">Tudo</button>
+              {disciplines.map((discipline) => (
+                <button type="button" data-filter={discipline.id} aria-pressed="false">{discipline.label}</button>
+              ))}
+            </div>
+            <label class="year-filter">
+              <span>Ano</span>
+              <select id="year-filter" aria-label="Filtrar trabalhos por ano">
+                <option value="all">Todos</option>
+                {years.map((year) => <option value={year}>{year}</option>)}
+                <option value="undated">Sem ano</option>
+              </select>
+            </label>
+          </div>
+          <div class="filter-secondary">
+            <label class="search-filter">
+              <span class="sr-only">Buscar pelo título, descrição ou tecnologia</span>
+              <input id="project-search" type="search" placeholder="Buscar por projeto, técnica ou palavra-chave…" autocomplete="off" />
+            </label>
+            <span id="result-count" role="status" aria-live="polite">{projects.length} trabalhos</span>
+            <button id="clear-filters" type="button">Limpar filtros</button>
+          </div>
+        </div>
+
+        <div class="project-grid" id="project-grid">
+          {projects.map((project) => (
+            <div class="work-item" data-project>
               <ProjectCard project={project} />
             </div>
           ))}
         </div>
+        <p id="empty-state" class="empty-state" hidden>Nenhum trabalho encontrado com esses filtros. Experimente outra área, ano ou busca.</p>
       </section>
 
       <section id="portfolios" class="portfolio-section shell" aria-labelledby="portfolio-title">
@@ -165,6 +197,6 @@ const spriteUrl = `${base}assets/project-sprite.webp`;
       }, 900);
     </script>
     <script is:inline src="https://cdn.jsdelivr.net/npm/p5@2.3.1/lib/p5.min.js"></script>
-    <script is:inline type="module" src={`${base}site.js?v=20260729-3`} onerror="document.querySelectorAll('.reveal').forEach((node) => node.classList.add('visible'))"></script>
+    <script is:inline type="module" src={`${base}site.js?v=20261103-1`} onerror="document.querySelectorAll('.reveal').forEach((node) => node.classList.add('visible'))"></script>
   </body>
 </html>
