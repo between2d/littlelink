@@ -1,16 +1,19 @@
 ---
 import ProjectCard from '../components/ProjectCard.astro';
 import { projects as archiveProjects, portfolios } from '../data/projects.mjs';
-import { disciplines, allWork, availableYears } from '../data/work.mjs';
+import { disciplines, allWork, availableYears, recentWork } from '../data/work.mjs';
+import { featuredIds } from '../data/case-studies.mjs';
 import '../styles/global.css';
 import '../styles/link-list.css';
 import '../styles/portfolio.css';
+import '../styles/editorial.css';
 
 const base = import.meta.env.BASE_URL;
 const storeUrl = 'https://riegulate.lojavirtualnuvem.com.br/';
 const spriteUrl = `${base}assets/project-sprite.webp`;
 const projects = allWork(archiveProjects);
 const years = availableYears(projects);
+const featuredProjects = featuredIds.map((id) => recentWork.find((project) => project.id === id)).filter(Boolean);
 ---
 <!doctype html>
 <html lang="pt-BR">
@@ -21,8 +24,8 @@ const years = availableYears(projects);
     <meta name="theme-color" content="#09090c" />
     <meta property="og:title" content="Rieg Rodig / riegulate — portfólio" />
     <meta property="og:description" content="Projetos e trabalhos em arte, audiovisual, jogos, desenvolvimento e música. Viva Usina, Metamuseu, Canal Zero e mais." />
-    <meta property="og:image" content={`${base}assets/featured-massa.webp`} />
-    <title>riegulate — links oficiais</title>
+    <meta property="og:type" content="website" />
+    <title>riegulate — arte, som, vídeo e tecnologia criativa</title>
     <link rel="icon" href={`${base}favicon.svg`} type="image/svg+xml" />
     <style is:inline>
       @media (max-width: 700px) {
@@ -38,36 +41,50 @@ const years = availableYears(projects);
     <header class="site-header">
       <a class="wordmark" href="#top"><span>R</span> riegulate</a>
       <nav aria-label="Navegação principal">
-        <a href="#store">loja</a>
         <a href="#trabalhos">trabalhos</a>
+        <a href="#store">loja</a>
         <a href="#portfolios">portfólios</a>
         <a href="#redes">redes</a>
         <a href="#contact">contato</a>
       </nav>
-      <a class="header-store" href={storeUrl} target="_blank" rel="noopener noreferrer">Massa Demais ↗</a>
+      <a class="header-store" href="#contact">Vamos trabalhar ↗</a>
     </header>
 
     <main id="top">
-      <section id="store" class="hero shell" aria-labelledby="hero-title">
-        <div class="hero-copy reveal visible">
-          <p class="signal"><span></span> PRIMEIRO LINK / LOJA NOVA</p>
-          <p class="hero-kicker">Camisetas autorais · João Pessoa</p>
-          <h1 id="hero-title"><span>Massa</span> Demais</h1>
-          <p class="hero-lede">Minha loja virtual de camisetas autorais, misturando humor nordestino, tipografia distorcida, tecnologia obsoleta e o universo visual do Riegulate.</p>
+      <section class="portfolio-hero shell" aria-labelledby="hero-title">
+        <div class="portfolio-hero-main">
+          <p class="signal"><span></span> RIEGULATE / JOÃO PESSOA, BR</p>
+          <p class="portfolio-hero-tag">PORTFÓLIO · TRABALHOS SELECIONADOS / 2018—2026</p>
+          <h1 id="hero-title"><span>Arte.</span><span>Som.</span><span>Código.</span></h1>
+          <p class="portfolio-hero-lede">Sou Rieg Rodig. Faço música, videoarte, visuais ao vivo, edição, áudio, jogos e experiências interativas. Aqui estão trabalhos que podem ser vistos, ouvidos e explorados.</p>
           <div class="hero-actions">
-            <a class="button primary" href={storeUrl} target="_blank" rel="noopener noreferrer">Entrar na loja <b>↗</b></a>
-            <a class="button ghost" href="#trabalhos">Explorar o portfólio ↓</a>
+            <a class="button primary" href="#trabalhos">Explorar trabalhos <b>↓</b></a>
+            <a class="button ghost" href="#contact">Falar de um projeto ↗</a>
           </div>
-          <div class="hero-meta">
-            <span>CAMISETAS AUTORAIS</span><span>PEQUENAS TIRAGENS</span><span>FEITO NA PARAÍBA</span>
+          <div class="portfolio-hero-meta">
+            <span>ARTE & VJ</span><span>VÍDEO</span><span>ÁUDIO</span><span>DEV CRIATIVO</span><span>AULAS</span>
           </div>
         </div>
-
-        <a class="hero-visual reveal visible" href={storeUrl} target="_blank" rel="noopener noreferrer" aria-label="Abrir a loja Massa Demais">
-          <img src={`${base}assets/featured-massa.webp`} alt="Rieg usando uma camiseta Massa Demais entre televisores CRT e sintetizadores na praia" width="1800" height="1080" fetchpriority="high" />
-          <div id="p5-stage" aria-hidden="true"></div>
-          <div class="hero-label"><span>LOJA MASSA DEMAIS</span><b>COMPRAR ↗</b></div>
-        </a>
+        <div class="portfolio-hero-aside" aria-labelledby="featured-heading">
+          <div class="portfolio-hero-aside-heading">
+            <span class="section-code">EM FOCO / 2026</span>
+            <h2 id="featured-heading">Três trabalhos recentes</h2>
+          </div>
+          <div class="featured-stack">
+            {featuredProjects.map((project, index) => (
+              <a href={`${base}trabalhos/${project.id}/`} class="featured-spotlight" style={`--spotlight-accent:${project.accent};`}>
+                <span class="spotlight-number">0{index + 1}</span>
+                <span class="spotlight-main">
+                  <span class="spotlight-kicker">{project.eyebrow}</span>
+                  <strong>{project.title}</strong>
+                  <span class="spotlight-status">{project.status}</span>
+                </span>
+                <span class="spotlight-arrow" aria-hidden="true">↗</span>
+              </a>
+            ))}
+          </div>
+          <a class="portfolio-hero-more" href="#portfolios">Ver portfólios em PDF ↗</a>
+        </div>
       </section>
 
       <section class="intro shell reveal" aria-labelledby="about-title">
@@ -149,6 +166,19 @@ const years = availableYears(projects);
         </div>
       </section>
 
+      <section id="store" class="store-feature shell" aria-labelledby="store-title">
+        <div class="store-feature-copy">
+          <p class="section-code">PROJETO AUTORAL / LOJA</p>
+          <h2 id="store-title">Massa Demais.</h2>
+          <p>Camisetas e peças gráficas autorais, com humor nordestino, tipografia e visual retrô. Um projeto independente feito na Paraíba.</p>
+          <a class="button primary" href={storeUrl} target="_blank" rel="noopener noreferrer">Conhecer a loja <b>↗</b></a>
+        </div>
+        <a class="store-feature-visual" href={storeUrl} target="_blank" rel="noopener noreferrer" aria-label="Visitar a loja Massa Demais">
+          <img src={`${base}assets/featured-massa.webp`} alt="Arte promocional da Massa Demais" loading="lazy" width="1800" height="1080" />
+          <span>PROJETO AUTORAL / MASSA DEMAIS ↗</span>
+        </a>
+      </section>
+
       <section id="redes" class="social-section shell reveal" aria-labelledby="social-title">
         <div class="section-heading">
           <div>
@@ -177,7 +207,7 @@ const years = availableYears(projects);
         <div class="contact-copy">
           <p class="section-code">04 / CONTATO</p>
           <h2 id="contact-title">Vamos trabalhar juntos.</h2>
-          <p>Disponível para visuais ao vivo, VJ, projeção, edição de vídeo, motion graphics, música, sound design, áudio para jogos e projetos de tecnologia criativa.</p>
+          <p>Disponível para apresentações, VJ e visuais ao vivo, edição de vídeo, motion graphics, pós-produção de áudio, sound design, desenvolvimento criativo e aulas de inglês e alemão.</p>
           <div class="contact-actions">
             <a class="button primary" href="https://wa.me/5583988788180" target="_blank" rel="noopener noreferrer">WhatsApp <b>↗</b></a>
             <a class="button ghost" href="mailto:riegulate@gmail.com">riegulate@gmail.com</a>
@@ -197,7 +227,6 @@ const years = availableYears(projects);
         document.querySelectorAll('.reveal').forEach((node) => node.classList.add('visible'));
       }, 900);
     </script>
-    <script is:inline src="https://cdn.jsdelivr.net/npm/p5@2.3.1/lib/p5.min.js"></script>
-    <script is:inline type="module" src={`${base}site.js?v=20261103-1`} onerror="document.querySelectorAll('.reveal').forEach((node) => node.classList.add('visible'))"></script>
+    <script is:inline type="module" src={`${base}site.js?v=20261103-2`} onerror="document.querySelectorAll('.reveal').forEach((node) => node.classList.add('visible'))"></script>
   </body>
 </html>

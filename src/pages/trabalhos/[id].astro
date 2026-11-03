@@ -1,7 +1,9 @@
 ---
 import { recentWork, disciplines } from '../../data/work.mjs';
+import { caseStudies } from '../../data/case-studies.mjs';
 import '../../styles/global.css';
 import '../../styles/portfolio.css';
+import '../../styles/editorial.css';
 
 export function getStaticPaths() {
   return recentWork.map((project) => ({
@@ -12,6 +14,7 @@ export function getStaticPaths() {
 
 const { project } = Astro.props;
 const base = import.meta.env.BASE_URL;
+const caseStudy = caseStudies[project.id];
 const labels = project.categories
   .map((category) => disciplines.find((item) => item.id === category)?.label)
   .filter(Boolean)
@@ -58,7 +61,7 @@ const labels = project.categories
               <div><dt>Recursos</dt><dd>{project.tools}</dd></div>
             </dl>
             {!project.externalUrl && (
-              <p>Este registro apresenta o trabalho sem atribuir imagens, vídeos ou materiais públicos que ainda não foram vinculados ao portfólio.</p>
+              <p class="project-material-note">Registros audiovisuais e documentação adicional podem ser solicitados para avaliação profissional.</p>
             )}
             <div class="contact-actions">
               {project.externalUrl && (
@@ -68,6 +71,52 @@ const labels = project.categories
             </div>
           </div>
         </div>
+        {caseStudy && (
+          <section class="case-study" aria-labelledby="case-study-title">
+            <div class="case-study-heading">
+              <p class="section-code">ESTUDO DE CASO / {project.year}</p>
+              <h2 id="case-study-title">{caseStudy.heading}</h2>
+              <p>{caseStudy.intro}</p>
+            </div>
+            <div class="case-study-grid">
+              <div class="case-study-panel">
+                <h3>Contexto e desafio</h3>
+                <p>{caseStudy.challenge}</p>
+              </div>
+              <div class="case-study-panel">
+                <h3>Ficha técnica</h3>
+                <dl class="project-facts">
+                  <div><dt>Período</dt><dd>{caseStudy.date}</dd></div>
+                  <div><dt>Local</dt><dd>{caseStudy.place}</dd></div>
+                  <div><dt>Atuação</dt><dd>{caseStudy.involvement}</dd></div>
+                </dl>
+              </div>
+              <div class="case-study-panel">
+                <h3>Processo e execução</h3>
+                <ul>
+                  {caseStudy.execution.map((point) => <li>{point}</li>)}
+                </ul>
+              </div>
+              <div class="case-study-panel">
+                <h3>Entregas e situação</h3>
+                <ul>
+                  {caseStudy.outcomes.map((point) => <li>{point}</li>)}
+                </ul>
+              </div>
+              {caseStudy.publicLinks.length > 0 && (
+                <div class="case-study-panel case-study-panel--wide">
+                  <h3>Ver mais</h3>
+                  <p>Referências públicas vinculadas ao projeto:</p>
+                  <div class="case-study-links">
+                    {caseStudy.publicLinks.map((link) => (
+                      <a href={link.url} target="_blank" rel="noopener noreferrer">{link.label} ↗</a>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          </section>
+        )}
       </article>
     </main>
     <footer class="shell">
