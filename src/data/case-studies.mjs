@@ -1,12 +1,12 @@
-// Estudos de caso com conteúdo verificável. Nenhuma imagem, cliente ou resultado
-// é inventado: fotos e vídeos serão adicionados quando publicados/autorizados.
+// Estudos de caso com créditos, proveniência e distinção entre arquivo e registros do evento.
+// Vídeos externos preservam sua origem; imagens selecionadas foram trazidas do Drive.
 export const caseStudies = {
   'viva-usina-2026': {
     heading: 'Show autoral na Usina Cultural Energisa',
-    intro: 'Em 31 de outubro de 2026, a RIEG integrou a programação do Viva Usina, em João Pessoa. Uma apresentação musical de repertório autoral, com sua dimensão performática e audiovisual.',
+    intro: 'Em 31 de outubro de 2026, a formação original da RIEG, Rieg Rodig (voz, samplers e sintetizadores), Daniel Jesi (baixo) e Nildo Gonzalez (bateria), voltou ao palco após nove anos. O show no Palco Bonde revisitou o álbum e filme 12:00.',
     date: '31 de outubro de 2026',
     place: 'Usina Cultural Energisa · João Pessoa, PB',
-    involvement: 'Música autoral e performance ao vivo',
+    involvement: 'Rieg Rodig: voz, samplers e sintetizadores · Daniel Jesi: baixo · Nildo Gonzalez: bateria',
     challenge: 'Transportar o repertório e a identidade do projeto musical para uma apresentação ao vivo dentro da programação do evento.',
     execution: [
       'Preparação da apresentação e do material de divulgação do show.',
@@ -17,7 +17,26 @@ export const caseStudies = {
       'Apresentação realizada em 31/10/2026.',
       'Vídeos curtos e vídeo-convite produzidos para a divulgação.',
     ],
-    publicLinks: [],
+    gallery: [
+      {
+        file: 'assets/work/rieg-promo-2026.jpg',
+        alt: 'Rieg Rodig com instrumentos eletrônicos e televisores, fotografia de divulgação de 2026.',
+        caption: 'Retrato de divulgação de 2026, anterior à apresentação de 31 de outubro. Não é foto do show.',
+      },
+      {
+        file: 'assets/work/rieg-live-archive.jpg',
+        alt: 'RIEG em palco com instrumentos e projeção roxa ao fundo, foto de arquivo.',
+        caption: 'A RIEG no palco, fotografia de arquivo anterior a 2026. Crédito indicado na imagem: Rafael Paiva.',
+      },
+    ],
+    video: {
+      embedUrl: 'https://www.youtube-nocookie.com/embed/fYP4wZm39Jg',
+      title: 'RIEG 12:00 — filme/álbum visual de 2018',
+      caption: 'Filme 12:00 (2018), obra revisitada ao vivo no Viva Usina 2026. Este vídeo não documenta o show de outubro.',
+    },
+    publicLinks: [
+      { label: 'Filme 12:00 no YouTube', url: 'https://www.youtube.com/watch?v=fYP4wZm39Jg' },
+    ],
   },
   'campanha-nabor-2026': {
     heading: 'Pós-produção de áudio para comunicação política',
@@ -35,7 +54,14 @@ export const caseStudies = {
       'Pós-produção sonora de materiais de campanha.',
       'Amostras de peças e créditos adicionais disponíveis sob consulta, conforme permissões de divulgação.',
     ],
-    publicLinks: [],
+    video: {
+      embedUrl: 'https://drive.google.com/file/d/1vm9psE9ORv1KUVWpRWr7JX4pJB_8ffU6/preview',
+      title: 'Filme Busca — corte de trabalho da campanha (agosto de 2026)',
+      caption: 'Corte audiovisual de trabalho disponibilizado no Drive. Atuação no projeto: pós-produção de áudio. As imagens, a montagem e a direção não são creditadas aqui como autoria de Rieg Rodig.',
+    },
+    publicLinks: [
+      { label: 'Abrir corte de trabalho no Google Drive', url: 'https://drive.google.com/file/d/1vm9psE9ORv1KUVWpRWr7JX4pJB_8ffU6/view' },
+    ],
   },
   'presenca-instavel': {
     heading: 'Uma obra participativa construída com rostos e fragmentos digitais',
@@ -53,6 +79,13 @@ export const caseStudies = {
     outcomes: [
       'Projeto selecionado para o Metamuseu 2026.',
       'Protótipos e sistemas em desenvolvimento. A instalação final não é apresentada como concluída.',
+    ],
+    gallery: [
+      {
+        file: 'assets/work/presenca-prototype-2026.png',
+        alt: 'Interface do protótipo Presença Instável em tela de captura e revisão de fragmento.',
+        caption: 'Captura real do protótipo em 18 de agosto de 2026. A etapa de revisão aparece em testes; não é documentação da versão final.',
+      },
     ],
     publicLinks: [
       { label: 'Repositório do projeto', url: 'https://github.com/between2d/presenca-instavel' },
