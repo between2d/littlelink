@@ -64,3 +64,30 @@ test('no released status is claimed for the interactive Metamuseu work', () => {
   assert.match(project.status, /em desenvolvimento/i);
   assert.match(caseStudies['presenca-instavel'].intro, /em andamento/i);
 });
+
+test('all referenced real portfolio media is checked into the site', async () => {
+  const { existsSync } = await import('node:fs');
+  const { join } = await import('node:path');
+  const media = new Set([
+    ...recentWork.map((work) => work.mediaFile).filter(Boolean),
+    ...Object.values(caseStudies).flatMap((study) =>
+      (study.gallery || []).map((item) => item.file)
+    ),
+  ]);
+  assert.ok(media.size >= 3);
+  for (const file of media) {
+    assert.match(file, /^assets\/work\/[a-z0-9-]+\.(png|jpg|webp)$/);
+    assert.ok(existsSync(join('public', file)), `Missing referenced media: ${file}`);
+  }
+});
+
+test('external work videos have proper labels and HTTPS source', () => {
+  for (const [id, study] of Object.entries(caseStudies)) {
+    if (!study.video) continue;
+    const url = new URL(study.video.embedUrl);
+    assert.equal(url.protocol, 'https:', id);
+    assert.ok(study.video.title && study.video.caption, id);
+  }
+  assert.match(caseStudies['viva-usina-2026'].video.caption, /não documenta o show/i);
+  assert.match(caseStudies['campanha-nabor-2026'].video.caption, /pós-produção de áudio/i);
+});
