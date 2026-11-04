@@ -20,7 +20,7 @@ export const recentWork = [
     categories: ['arte', 'audio'],
     posterText: 'RIEG / AO VIVO',
     mediaFile: 'assets/work/rieg-promo-2026.jpg',
-    mediaAlt: 'Foto de divulgação da RIEG com sintetizadores, registrada em 2026; não é imagem do show de outubro.',
+    mediaAlt: 'Retrato de divulgação de Rieg Rodig com sintetizadores, de 2026; não é imagem do show de outubro.',
     accent: '#ff5bbd',
     tools: 'Show · performance · música autoral',
   },
