@@ -174,7 +174,7 @@ export const portfolios = [
   {
     title: 'Sound Design e Áudio para Jogos',
     detail: 'Composição, sound design, áudio para jogos e criação de universos sonoros',
-    url: 'https://drive.google.com/file/d/1ygLUlsRe76gXGKy21lnQfsXhmewQc6FE/view?usp=sharing',
+    url: 'https://drive.google.com/file/d/1JmBI-asbVHMQBwlJpcYR30osd3WtJT5E/view',
     accent: '#ff9a4d',
   },
 ];
