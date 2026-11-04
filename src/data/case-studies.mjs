@@ -63,6 +63,28 @@ export const caseStudies = {
       { label: 'Abrir corte de trabalho no Google Drive', url: 'https://drive.google.com/file/d/1vm9psE9ORv1KUVWpRWr7JX4pJB_8ffU6/view' },
     ],
   },
+  'nomad-soul-pc': {
+    heading: 'Nomad Soul Zero: um jogo musical da banda RIEG',
+    intro: 'Nomad Soul Zero nasceu como um jogo narrativo cyberpunk ligado ao universo musical da RIEG. Lançado para Android em 2022, ganhou uma página pública no itch.io com versão web em novembro de 2026. A programação original foi desenvolvida por colaboradores; o trabalho de adaptação para sistemas desktop continua em andamento.',
+    date: '2022 · lançamento Android / novembro de 2026 · itch.io',
+    place: 'João Pessoa, PB · distribuição digital',
+    involvement: 'Rieg Rodig: concepção, direção criativa, música da RIEG e coordenação artística',
+    challenge: 'Levar a narrativa, o visual e a trilha de um álbum-game point-and-click além do lançamento inicial para Android, preservando o trabalho coletivo e a experiência do jogador.',
+    execution: [
+      'Concepção e direção criativa do universo musical e narrativo da RIEG.',
+      'Desenvolvimento original em colaboração com equipe de programação, arte, roteiro e áudio.',
+      'Publicação da versão web no itch.io em 2026 e continuidade do trabalho de portabilidade para desktop.',
+    ],
+    outcomes: [
+      'Jogo original lançado no Android em 2022.',
+      'Página pública no itch.io com versão web em novembro de 2026.',
+      'Versões nativas para Windows, Linux e macOS ainda em desenvolvimento, sem anunciar lançamento antecipado.',
+    ],
+    publicLinks: [
+      { label: 'Jogar Nomad Soul Zero no itch.io', url: 'https://omgwtf.itch.io/nomad-soul-zero' },
+      { label: 'Versão Android no Google Play', url: 'https://play.google.com/store/apps/details?id=com.BarbaricRealms.NomadSoulZero' },
+    ],
+  },
   'presenca-instavel': {
     heading: 'Uma obra participativa construída com rostos e fragmentos digitais',
     intro: 'Projeto selecionado para o Metamuseu 2026. A obra trabalha com captura de rosto, fragmentos fotográficos e interação corporal em um ambiente tridimensional navegável. A implementação está em andamento.',
