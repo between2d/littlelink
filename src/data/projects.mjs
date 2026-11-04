@@ -94,7 +94,7 @@ export const projects = [
     year: 'ANDROID',
     title: 'Nomad Soul Zero — baixar o jogo',
     eyebrow: 'Álbum-game cyberpunk da Rieg',
-    description: 'Jogo point-and-click para Android que transforma as cinco músicas do EP em narrativa, personagens e exploração.',
+    description: 'Versão original para Android do jogo point-and-click da banda RIEG, lançado em 2022. A edição web também está disponível no itch.io.',
     url: 'https://play.google.com/store/apps/details?id=com.BarbaricRealms.NomadSoulZero',
     action: 'Baixar no Google Play',
     sprite: '100% 50%',
@@ -174,7 +174,7 @@ export const portfolios = [
   {
     title: 'Sound Design e Áudio para Jogos',
     detail: 'Composição, sound design, áudio para jogos e criação de universos sonoros',
-    url: 'https://drive.google.com/file/d/1ygLUlsRe76gXGKy21lnQfsXhmewQc6FE/view?usp=sharing',
+    url: 'https://drive.google.com/file/d/1JmBI-asbVHMQBwlJpcYR30osd3WtJT5E/view',
     accent: '#ff9a4d',
   },
 ];

@@ -59,6 +59,17 @@ test('featured work exists and points to complete case studies', () => {
   }
 });
 
+test('Nomad Soul Zero links to the published itch.io version without claiming desktop releases', () => {
+  const web = recentWork.find((work) => work.id === 'nomad-soul-pc');
+  const android = legacy.find((work) => work.id === 'nomad-soul-zero-game');
+  assert.equal(web.externalUrl, 'https://omgwtf.itch.io/nomad-soul-zero');
+  assert.match(web.status, /publicado no itch\.io/i);
+  assert.match(web.description, /desenvolvimento/i);
+  assert.match(web.externalLabel, /jogar/i);
+  assert.match(android.url, /play\.google\.com/);
+  assert.equal(caseStudies['nomad-soul-pc'].publicLinks[0].url, web.externalUrl);
+});
+
 test('no released status is claimed for the interactive Metamuseu work', () => {
   const project = recentWork.find((work) => work.id === 'presenca-instavel');
   assert.match(project.status, /em desenvolvimento/i);
