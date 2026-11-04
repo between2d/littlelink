@@ -15,6 +15,8 @@ export function getStaticPaths() {
 const { project } = Astro.props;
 const base = import.meta.env.BASE_URL;
 const caseStudy = caseStudies[project.id];
+const heroCaption = caseStudy?.gallery?.find((asset) => asset.file === project.mediaFile)?.caption;
+const extraGallery = (caseStudy?.gallery || []).filter((asset) => asset.file !== project.mediaFile);
 const labels = project.categories
   .map((category) => disciplines.find((item) => item.id === category)?.label)
   .filter(Boolean)
@@ -48,9 +50,16 @@ const labels = project.categories
       <article class="shell project-detail-shell">
         <a class="project-back" href={`${base}#trabalhos`}>← Voltar aos trabalhos</a>
         <div class="project-detail-grid">
-          <div class="project-detail-poster" style={`--poster-accent:${project.accent};`} role="img" aria-label={`Cartaz tipográfico: ${project.title}`}>
-            <span>{project.posterText}</span>
-          </div>
+          {project.mediaFile ? (
+            <figure class:list={['project-detail-figure', { 'project-detail-figure--interface': project.id === 'presenca-instavel' }]}>
+              <img src={`${base}${project.mediaFile}`} alt={project.mediaAlt || project.title} width="1440" height="1000" fetchpriority="high" decoding="async" />
+              {heroCaption && <figcaption>{heroCaption}</figcaption>}
+            </figure>
+          ) : (
+            <div class="project-detail-poster" style={`--poster-accent:${project.accent};`} role="img" aria-label={`Cartaz tipográfico: ${project.title}`}>
+              <span>{project.posterText}</span>
+            </div>
+          )}
           <div class="project-detail-info">
             <p class="section-code">{project.year} / {labels}</p>
             <h1>{project.title}</h1>
@@ -78,6 +87,31 @@ const labels = project.categories
               <h2 id="case-study-title">{caseStudy.heading}</h2>
               <p>{caseStudy.intro}</p>
             </div>
+            {(extraGallery.length > 0 || caseStudy.video) && (
+              <div class="case-media" aria-label="Documentação visual e audiovisual">
+                {extraGallery.map((media) => (
+                  <figure class="case-media-photo">
+                    <img src={`${base}${media.file}`} alt={media.alt} loading="lazy" decoding="async" />
+                    <figcaption>{media.caption}</figcaption>
+                  </figure>
+                ))}
+                {caseStudy.video && (
+                  <figure class="case-media-video">
+                    <div class="case-video-frame">
+                      <iframe
+                        src={caseStudy.video.embedUrl}
+                        title={caseStudy.video.title}
+                        loading="lazy"
+                        allow="encrypted-media; picture-in-picture; fullscreen"
+                        allowfullscreen
+                        referrerpolicy="strict-origin-when-cross-origin"
+                      ></iframe>
+                    </div>
+                    <figcaption>{caseStudy.video.caption}</figcaption>
+                  </figure>
+                )}
+              </div>
+            )}
             <div class="case-study-grid">
               <div class="case-study-panel">
                 <h3>Contexto e desafio</h3>
