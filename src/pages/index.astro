@@ -1,5 +1,6 @@
 ---
 import ProjectCard from '../components/ProjectCard.astro';
+import Broadcast from '../components/Broadcast.astro';
 import { projects as archiveProjects, portfolios } from '../data/projects.mjs';
 import { disciplines, allWork, availableYears, recentWork } from '../data/work.mjs';
 import { featuredIds } from '../data/case-studies.mjs';
@@ -43,6 +44,7 @@ const featuredProjects = featuredIds.map((id) => recentWork.find((project) => pr
       <a class="wordmark" href="#top"><span>R</span> riegulate</a>
       <nav aria-label="Navegação principal">
         <a href="#trabalhos">trabalhos</a>
+        <a href={`${base}lab/`}>signal lab</a>
         <a href="#store">loja</a>
         <a href="#portfolios">portfólios</a>
         <a href="#redes">redes</a>
@@ -55,38 +57,20 @@ const featuredProjects = featuredIds.map((id) => recentWork.find((project) => pr
       <section class="portfolio-hero shell" aria-labelledby="hero-title">
         <div class="portfolio-hero-main">
           <p class="signal"><span></span> RIEGULATE / JOÃO PESSOA, BR</p>
-          <p class="portfolio-hero-tag">PORTFÓLIO · TRABALHOS SELECIONADOS / 2018—2026</p>
+          <p class="portfolio-hero-tag">PORTFÓLIO / TRANSMISSÃO INDEPENDENTE</p>
           <h1 id="hero-title"><span>Arte.</span><span>Som.</span><span>Código.</span></h1>
           <p class="portfolio-hero-lede">Sou Rieg Rodig. Faço música, videoarte, visuais ao vivo, edição, áudio, jogos e experiências interativas. Aqui estão trabalhos que podem ser vistos, ouvidos e explorados.</p>
           <div class="hero-actions">
             <a class="button primary" href="#trabalhos">Explorar trabalhos <b>↓</b></a>
             <a class="button ghost" href="https://omgwtf.itch.io/nomad-soul-zero" target="_blank" rel="noopener noreferrer">Jogar Nomad Soul Zero ↗</a>
             <a class="button ghost" href="#contact">Falar de um projeto ↗</a>
+            <a class="button ghost" href="#portfolios">Portfólios em PDF ↓</a>
           </div>
           <div class="portfolio-hero-meta">
             <span>ARTE & VJ</span><span>VÍDEO</span><span>ÁUDIO</span><span>DEV CRIATIVO</span><span>AULAS</span>
           </div>
         </div>
-        <div class="portfolio-hero-aside" aria-labelledby="featured-heading">
-          <div class="portfolio-hero-aside-heading">
-            <span class="section-code">EM FOCO / 2026</span>
-            <h2 id="featured-heading">Três trabalhos recentes</h2>
-          </div>
-          <div class="featured-stack">
-            {featuredProjects.map((project, index) => (
-              <a href={`${base}trabalhos/${project.id}/`} class="featured-spotlight" style={`--spotlight-accent:${project.accent};`}>
-                <span class="spotlight-number">0{index + 1}</span>
-                <span class="spotlight-main">
-                  <span class="spotlight-kicker">{project.eyebrow}</span>
-                  <strong>{project.title}</strong>
-                  <span class="spotlight-status">{project.status}</span>
-                </span>
-                <span class="spotlight-arrow" aria-hidden="true">↗</span>
-              </a>
-            ))}
-          </div>
-          <a class="portfolio-hero-more" href="#portfolios">Ver portfólios em PDF ↗</a>
-        </div>
+        <Broadcast base={base} projects={featuredProjects} />
       </section>
 
       <section class="intro shell reveal" aria-labelledby="about-title">
