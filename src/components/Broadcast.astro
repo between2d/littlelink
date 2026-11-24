@@ -1,0 +1,96 @@
+---
+const { base, projects } = Astro.props;
+const channels = [
+  { title: 'Sinal aberto', tag: '00 / JOÃO PESSOA · PB', text: 'Arte, som e código em transmissão independente.', href: '#trabalhos', link: 'Explorar o acervo' },
+  ...projects.map((p, i) => ({ title: p.title, tag: String(i+1).padStart(2,'0')+' / '+p.eyebrow, text: p.status, href: base+'trabalhos/'+p.id+'/', link: 'Ver projeto' })),
+  { title: 'Signal Lab', tag: 'LAB / INSTRUMENTO VISUAL', text: 'Transforme música em imagens. Experimente, ajuste e projete.', href: base+'lab/', link: 'Abrir instrumento' }
+];
+---
+<section class="broadcast" aria-labelledby="broadcast-title">
+  <div class="station"><span>RIEGULATE / TRANSMISSÃO</span><span class="live"><i></i> SINAL ABERTO</span></div>
+  <div class="monitor">
+    <canvas width="720" height="420" aria-hidden="true"></canvas>
+    <div class="monitor-copy">
+      <p data-tag>{channels[0].tag}</p>
+      <h2 id="broadcast-title" data-title>{channels[0].title}</h2>
+      <p data-description>{channels[0].text}</p>
+      <a data-link href={channels[0].href}>{channels[0].link} ↗</a>
+    </div>
+  </div>
+  <div class="tuner" role="group" aria-label="Canais">
+    {channels.map((channel,i)=><button type="button" data-channel={i} data-title={channel.title} data-tag={channel.tag} data-description={channel.text} data-href={channel.href} data-link={channel.link} aria-pressed={i===0?'true':'false'}>{String(i).padStart(2,'0')} <span>{channel.title}</span></button>)}
+  </div>
+  <div class="station controls"><label>Interferência <input type="range" min="0" max="100" value="22" data-distortion /></label><button type="button" data-pause aria-pressed="false">Pausar imagem</button></div>
+  <noscript><p><a href={base+'lab/'}>Signal Lab</a> · <a href="#trabalhos">Acervo</a></p></noscript>
+</section>
+<style>
+.broadcast { min-width:0; background:#10110e; color:#eeeee2; border:1px solid #4a4b3f; padding:12px; font-family:'DM Mono',monospace; border-radius:4px; }
+.station { display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; padding:9px 2px; font-size:.62rem; letter-spacing:.08em; }
+.live { color:#d5ff3f; display:flex; align-items:center; gap:5px; }
+.live i { width:6px;height:6px;background:currentColor;border-radius:50%; }
+.monitor { position:relative; min-height:300px; aspect-ratio:12/9; background:#0b0c08; isolation:isolate; overflow:hidden; border:1px solid #484a40; }
+.monitor canvas { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:-2; }
+.monitor::after { content:''; position:absolute; inset:0; pointer-events:none; z-index:-1; background:linear-gradient(0deg,#080907 0%,#080907c9 30%,transparent 85%); }
+.monitor-copy { position:absolute; inset:auto 0 0; padding:clamp(14px,3vw,28px); }
+.monitor-copy p { font-size:.73rem; margin:0 0 10px; line-height:1.45; }
+.monitor-copy h2 { font-size:clamp(1.7rem,4vw,3.2rem); line-height:.99; letter-spacing:-.07em; margin:0 0 14px; overflow-wrap:anywhere; color:#eeeee2; }
+.monitor-copy a { display:inline-block;color:#d5ff3f; text-decoration:underline; text-underline-offset:4px; font-size:.8rem; }
+.tuner { display:grid; grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:4px;margin-top:8px; }
+.broadcast button { background:#20221c; color:#e7e7db; border:1px solid #545648; font:inherit; font-size:.7rem; cursor:pointer; min-height:42px; padding:7px; text-align:left; }
+.tuner button span { display:block; overflow-wrap:anywhere; }
+.tuner button[aria-pressed="true"] { background:#d5ff3f;color:#10110e;border-color:#d5ff3f; }
+.broadcast button:focus-visible,.broadcast a:focus-visible,.broadcast input:focus-visible { outline:2px solid #fff;outline-offset:3px; }
+.controls label { display:flex; align-items:center; gap:8px; }
+.controls input { width:90px; accent-color:#d5ff3f; }
+</style>
+<script>
+import { clamp, channelIndex } from '../lib/signal.mjs';
+document.querySelectorAll('.broadcast').forEach(root=>{
+  const canvas=root.querySelector('canvas'),ctx=canvas.getContext('2d');
+  const buttons=[...root.querySelectorAll('[data-channel]')];
+  const pause=root.querySelector('[data-pause]'), distortion=root.querySelector('[data-distortion]');
+  const preference=matchMedia('(prefers-reduced-motion: reduce)');
+  let active=0,paused=preference.matches,frame=0,raf=0,visible=true;
+  const colors=['#d5ff3f','#e2b59b','#80c8d4','#d7c2ff','#f2ac72'];
+  function draw(){
+    if(!ctx)return;
+    const w=canvas.width,h=canvas.height,d=clamp(Number(distortion.value),0,100)/100;
+    ctx.fillStyle='#10110c';ctx.fillRect(0,0,w,h);
+    ctx.strokeStyle=colors[active%colors.length];ctx.lineWidth=2;
+    for(let row=0;row<24;row++){
+      ctx.globalAlpha=.18+row/50;ctx.beginPath();
+      for(let x=0;x<=w;x+=5){
+        const y=h*.16+row*10+Math.sin(x*.013+frame*.018+row*.22)*(14+d*70)+Math.cos(x*.006-frame*.012+active*row*.16)*40;
+        if(x===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
+      }
+      ctx.stroke();
+    }
+    ctx.globalAlpha=.17;ctx.fillStyle=colors[active%colors.length];
+    for(let i=0;i<32;i++){const x=(i*181+frame*2)%w,y=(i*137+active*37)%h;ctx.fillRect(x,y,15+d*65,2);}
+    ctx.globalAlpha=1;
+  }
+  function stop(){if(raf)cancelAnimationFrame(raf);raf=0;}
+  function tick(){raf=0;frame++;draw();if(!paused&&visible&&!document.hidden)raf=requestAnimationFrame(tick);}
+  function sync(){stop();draw();if(!paused&&visible&&!document.hidden)raf=requestAnimationFrame(tick);}
+  function select(i){
+    active=channelIndex(i,buttons.length);
+    const button=buttons[active];if(!button)return;
+    buttons.forEach((b,j)=>b.setAttribute('aria-pressed',String(j===active)));
+    for(const key of ['tag','title','description'])root.querySelector('[data-'+key+']:not(button)').textContent=button.dataset[key];
+    const link=root.querySelector('a[data-link]');link.href=button.dataset.href;link.textContent=button.dataset.link+' ↗';
+    draw();
+  }
+  buttons.forEach((button,i)=>button.addEventListener('click',()=>select(i)));
+  root.querySelector('.tuner').addEventListener('keydown',event=>{
+    if(!['ArrowLeft','ArrowRight'].includes(event.key))return;
+    event.preventDefault();select(active+(event.key==='ArrowRight'?1:-1));buttons[active].focus();
+  });
+  function updatePause(){pause.setAttribute('aria-pressed',String(paused));pause.textContent=paused?'Animar imagem':'Pausar imagem';sync();}
+  pause.addEventListener('click',()=>{paused=!paused;updatePause();});
+  distortion.addEventListener('input',draw);
+  preference.addEventListener('change',()=>{paused=preference.matches;updatePause();});
+  document.addEventListener('visibilitychange',sync);
+  if('IntersectionObserver' in window)new IntersectionObserver(([entry])=>{visible=entry.isIntersecting;sync();}).observe(root);
+  updatePause();
+});
+</script>
