@@ -1,0 +1,121 @@
+---
+import '../styles/global.css';
+const base=import.meta.env.BASE_URL;
+---
+<!doctype html>
+<html lang="pt-BR">
+<head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>Signal Lab / riegulate</title><meta name="description" content="Instrumento audiovisual experimental: visuais generativos e áudio local." /></head>
+<body>
+<main class="lab">
+  <header><a href={base}>← riegulate / portfólio</a><span>LAB 001 / JOÃO PESSOA</span></header>
+  <h1>SIGNAL LAB<span>.</span></h1>
+  <p>Um instrumento visual para experimentar com música. Escolha um arquivo de áudio ou use o modo generativo. Nenhum arquivo sai do seu dispositivo.</p>
+  <div class="stage" id="stage"><canvas id="visual" width="960" height="540" aria-label="Visual generativo"></canvas></div>
+  <div class="toolbar">
+    <label>Fonte de áudio <input id="audio-file" type="file" accept="audio/*"/></label>
+    <audio id="player" controls preload="none" aria-label="Reprodução do áudio local"></audio>
+    <label>Modo <select id="mode"><option value="wave">Ondas</option><option value="orbit">Órbitas</option><option value="bars">Espectro</option></select></label>
+    <label>Intensidade <input id="intensity" type="range" min="0" max="100" value="55"/></label>
+    <label>Paleta <select id="palette"><option value="acid">Ácido</option><option value="ivory">Marfim</option><option value="red">Vermelho</option></select></label>
+    <div class="actions"><button id="pause" type="button" aria-pressed="false">Pausar imagem</button><button id="full" type="button">Tela cheia</button><button id="save" type="button">Salvar PNG</button></div>
+  </div>
+  <p id="status" role="status">Modo generativo / sem áudio</p>
+  <p class="hint">Para projeção, use Tela cheia. Esc para sair. Evite projeções com brilho excessivo.</p>
+  <noscript>Ative JavaScript para utilizar o instrumento.</noscript>
+</main>
+</body>
+</html>
+<style>
+body {background:#10110e;color:#eeeede;margin:0}
+.lab {max-width:1150px;margin:auto;padding:clamp(16px,4vw,48px);font-family:system-ui,sans-serif}
+header {display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font: .78rem monospace;letter-spacing:.05em}
+a {color:#d5ff3f}
+h1 {font-size:clamp(3.2rem,10vw,8rem);letter-spacing:-.08em;line-height:.9;margin:40px 0 18px}
+h1 span {color:#d5ff3f}
+p {max-width:70ch;line-height:1.6}
+.stage {aspect-ratio:16/9;background:#080907;border:1px solid #55574a;margin-top:24px}
+canvas {display:block;width:100%;height:100%;object-fit:contain}
+.stage:fullscreen {width:100%;height:100%;background:#080907}
+.toolbar {display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;margin-top:16px;align-items:center}
+label {display:grid;gap:7px;font:.75rem monospace}
+button,select,input[type=file] {min-height:42px;background:#20221c;color:#eeeede;border:1px solid #66695b;border-radius:0;padding:8px;font:inherit;max-width:100%}
+button {cursor:pointer;font:.75rem monospace}
+button:hover,button[aria-pressed=true] {background:#d5ff3f;color:#10110e}
+button:focus-visible,input:focus-visible,select:focus-visible {outline:2px solid #d5ff3f;outline-offset:3px}
+audio {width:100%;max-width:100%}
+input[type=range] {accent-color:#d5ff3f;width:100%}
+.actions {display:flex;flex-wrap:wrap;gap:6px;grid-column:1/-1}
+#status,.hint {font:.75rem/1.5 monospace;color:#b9bcad}
+</style>
+<script>
+import { clamp, signalLevel } from '../lib/signal.mjs';
+const canvas=document.querySelector('#visual'),ctx=canvas.getContext('2d'), player=document.querySelector('#player');
+const file=document.querySelector('#audio-file'),mode=document.querySelector('#mode'),intensity=document.querySelector('#intensity'),palette=document.querySelector('#palette');
+const pause=document.querySelector('#pause'),status=document.querySelector('#status'),stage=document.querySelector('#stage');
+const preference=matchMedia('(prefers-reduced-motion: reduce)');
+let paused=preference.matches,frame=0,raf=0,url='',audioContext,analyser,bins;
+const colors={acid:['#d5ff3f','#a3b674'],ivory:['#efeddb','#7d8073'],red:['#ff755e','#b7463b']};
+async function connectAudio(){
+  try{
+    if(!audioContext){
+      audioContext=new AudioContext();
+      analyser=audioContext.createAnalyser();analyser.fftSize=256;
+      const source=audioContext.createMediaElementSource(player);
+      source.connect(analyser);analyser.connect(audioContext.destination);
+      bins=new Uint8Array(analyser.frequencyBinCount);
+    }
+    await audioContext.resume();
+  }catch{status.textContent='Áudio sem análise disponível neste navegador.';}
+}
+file.addEventListener('change',()=>{
+  const selected=file.files?.[0];if(!selected)return;
+  player.pause();if(url)URL.revokeObjectURL(url);
+  url=URL.createObjectURL(selected);player.src=url;
+  status.textContent='Arquivo local: '+selected.name+' / pressione Play';
+});
+player.addEventListener('play',connectAudio);
+player.addEventListener('error',()=>{status.textContent='Não foi possível reproduzir este arquivo de áudio.';});
+function draw(){
+  if(!ctx)return;
+  const w=canvas.width,h=canvas.height,t=frame*.025,gain=clamp(Number(intensity.value),0,100)/100;
+  const playing=analyser&&bins&&!player.paused&&audioContext?.state==='running';
+  if(playing)analyser.getByteFrequencyData(bins);
+  const energy=playing?signalLevel(bins):.32+.16*Math.sin(t*.8);
+  const [primary,secondary]=colors[palette.value]||colors.acid;
+  ctx.fillStyle='#080907';ctx.fillRect(0,0,w,h);
+  ctx.strokeStyle=primary;ctx.fillStyle=primary;ctx.lineWidth=2;
+  if(mode.value==='wave'){
+    for(let j=0;j<30;j++){
+      ctx.globalAlpha=.2+j/45;ctx.beginPath();
+      for(let x=0;x<=w;x+=6){
+        const y=h*.18+j*h*.022+Math.sin(x*.012+t+j*.24)*(12+energy*gain*180)+Math.cos(x*.007-t*.7+j*.13)*45*gain;
+        if(x===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
+      }ctx.stroke();
+    }
+  }else if(mode.value==='orbit'){
+    for(let j=0;j<30;j++){
+      ctx.globalAlpha=.18+j/50;ctx.beginPath();
+      const r=24+j*7+energy*gain*90;
+      ctx.ellipse(w/2+Math.sin(t+j*.3)*35*gain,h/2,r*1.45,r,t*.12+j*.09,0,Math.PI*2);ctx.stroke();
+    }
+  }else{
+    for(let i=0;i<80;i++){
+      const level=playing?bins[Math.floor(i*bins.length/80)]/255:.25+.22*Math.sin(i*.25+t)+.15*Math.cos(i*.43-t);
+      const height=8+clamp(level,0,1)*h*(.2+gain*.7);
+      ctx.globalAlpha=.75;ctx.fillStyle=i%5===0?secondary:primary;ctx.fillRect(i*w/80,h/2-height/2,w/80-3,height);
+    }
+  }
+  ctx.globalAlpha=1;
+}
+function stop(){if(raf)cancelAnimationFrame(raf);raf=0;}
+function tick(){raf=0;frame++;draw();if(!paused&&!document.hidden)raf=requestAnimationFrame(tick);}
+function sync(){stop();draw();if(!paused&&!document.hidden)raf=requestAnimationFrame(tick);}
+function updatePause(){pause.textContent=paused?'Animar imagem':'Pausar imagem';pause.setAttribute('aria-pressed',String(paused));sync();}
+pause.addEventListener('click',()=>{paused=!paused;updatePause();});
+for(const control of [mode,intensity,palette])control.addEventListener('input',draw);
+preference.addEventListener('change',()=>{paused=preference.matches;updatePause();});
+document.addEventListener('visibilitychange',sync);
+document.querySelector('#full').addEventListener('click',async()=>{try{if(document.fullscreenElement)await document.exitFullscreen();else await stage.requestFullscreen();}catch{status.textContent='Tela cheia indisponível neste navegador.';}});
+document.querySelector('#save').addEventListener('click',()=>{const a=document.createElement('a');a.href=canvas.toDataURL('image/png');a.download='riegulate-signal.png';a.click();});
+updatePause();
+</script>
